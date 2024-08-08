@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import dataJson from '../assets/data/currencies.json';
 
-const useCurrencyFetch = () => {
+const useCurrencyFetch = (API_URL) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,7 @@ const useCurrencyFetch = () => {
   }));
 
   async function fetchCurrencyData(code) {
-    const url = `/api/get-quotes`;
+    const url = `${API_URL}/api/get-quotes`;
     const payload = {
         inCurrency: code,
         outCurrency: "VND"
@@ -20,7 +20,11 @@ const useCurrencyFetch = () => {
 
     try {
         const response = await fetch(url, {
-            method: 'POST',
+          mode:  'cors', 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
             headers: {
                 'Content-Type': 'application/json'
             },
