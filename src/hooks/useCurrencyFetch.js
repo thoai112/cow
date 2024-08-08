@@ -12,36 +12,24 @@ const useCurrencyFetch = (API_URL) => {
   }));
 
   async function fetchCurrencyData(code) {
-    const url = `${API_URL}/api/get-quotes`;
-    const payload = {
-        inCurrency: code,
-        outCurrency: "VND"
-    };
-
+    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${code.toLowerCase()}.json`;
+    
     try {
-        const response = await fetch(url, {
-          mode:  'cors', 
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const responseData = await response.json();
-        const price = responseData.data.defaultPair.price;
-        const timestamp = new Date(responseData.data.timestamp).toLocaleString();
+        // const price = responseData.data.defaultPair.price;
+        // const timestamp = new Date(responseData.data.timestamp).toLocaleString();
+        const time = responseData.data.date;
+        const price = responseData.data[code.toLowerCase()].vnd;
 
         // Update datacurrency with price and timestamp
         mData = mData.map(item => 
-            item.code === code ? { ...item, priceVND: price, timeUpdate: timestamp } : item
+            item.code === code ? { ...item, priceVND: price, timeUpdate: time } : item
         );
 
     } catch (error) {
