@@ -16,7 +16,7 @@ const Table = () => {
     code: "",
     numToBasic: "",
     minorSingle: "",
-    priceVND: [0, 1000000000],
+    priceVND: "",
   });
   const [visibleColumns, setVisibleColumns] = useState({
     code: true,
@@ -42,8 +42,10 @@ const Table = () => {
           .toLowerCase()
           .includes(filters.minorSingle.toLowerCase());
       const matchespriceVND =
-        item.priceVND >= filters.priceVND[0] &&
-        item.priceVND <= filters.priceVND[1];
+        filters.priceVND === "" ||
+        item.priceVND
+          .toLowerCase()
+          .includes(filters.priceVND.toLowerCase());
       return (
         matchesCode &&
         matchesnumToBasic &&
