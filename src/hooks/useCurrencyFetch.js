@@ -27,12 +27,8 @@ const useCurrencyFetch = () => {
       const time = responseData.date;
       const price = responseData[code.toLowerCase()].vnd;
 
-      // Update datacurrency with price and timestamp
       mData = mData.map((item) =>
-        item.code === code
-          ? { ...item, priceVND: price, timeUpdate: time }
-          : item
-      );
+        item.code === code ? { ...item, priceVND: price, timeUpdate: time }: item);
 } catch (error) {
       console.error(`Error fetching currency data for ${code}:`, error);
     }

@@ -99,7 +99,7 @@ const Table = () => {
   // });
 
   return (
-    <table className="table table-striped rounded-corners">
+    <table>
       {/* <thead className="thead-dark">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
