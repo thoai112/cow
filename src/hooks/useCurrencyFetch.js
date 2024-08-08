@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import dataJson from '../assets/data/currencies.json';
 
-const useCurrencyFetch = (API_URL) => {
+const useCurrencyFetch = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

@@ -25,7 +25,7 @@ const Table = () => {
   //   minorSingle: true,
   //   priceVND: true,
   // });
-  const { data: mData, loading, error } = useCurrencyFetch(API_URL);
+  const { data: mData, loading, error } = useCurrencyFetch();
   console.log(mData);
 
   // const filteredData = useMemo(() => {
