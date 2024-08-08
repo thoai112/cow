@@ -22,15 +22,19 @@ const useCurrencyFetch = () => {
       }
 
       const responseData = await response.json();
-      // const price = responseData.data.defaultPair.price;
-      // const timestamp = new Date(responseData.data.timestamp).toLocaleString();
       const time = responseData.date;
       const price = responseData[code.toLowerCase()].vnd;
 
-      mData = mData.map((item) =>
-        item.code === code ? { ...item, priceVND: price, timeUpdate: time }: item);
-} catch (error) {
+      const updatedItem = mData.find((item) => item.code === code);
+      if (updatedItem) {
+        updatedItem.priceVND = price;
+        updatedItem.timeUpdate = time;
+      }
+
+      return updatedItem;
+    } catch (error) {
       console.error(`Error fetching currency data for ${code}:`, error);
+      return null;
     }
   }
 
@@ -40,8 +44,7 @@ const useCurrencyFetch = () => {
       const updatedData = await Promise.all(
         mData.map(({ code }) => fetchCurrencyData(code))
       );
-      console.log("Updated Data:", updatedData); // Log the updated data
-      setData(updatedData);
+      setData(updatedData.filter(item => item !== null));
       setLoading(false);
     } catch (error) {
       console.error("Error updating currency data:", error);

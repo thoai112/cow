@@ -5,11 +5,11 @@ import {
   getCoreRowModel,
   flexRender,
   getPaginationRowModel,
-  getSortedRowModel
+  getSortedRowModel,
   // getFilteredRowModel,
   // getGroupedRowModel,
 } from "@tanstack/react-table";
-import useCurrencyFetch from '../hooks/useCurrencyFetch';
+import useCurrencyFetch from "../hooks/useCurrencyFetch";
 const Table = () => {
   const [sorting, setSorting] = useState([]);
   const [filters, setFilters] = useState({
@@ -24,8 +24,9 @@ const Table = () => {
     minorSingle: true,
     priceVND: true,
   });
+
   const { data: mData, loading, error } = useCurrencyFetch();
- 
+  console.log(mData);
   const filteredData = useMemo(() => {
     return mData.filter((item) => {
       const matchesCode =
@@ -43,9 +44,7 @@ const Table = () => {
           .includes(filters.minorSingle.toLowerCase());
       const matchespriceVND =
         filters.priceVND === "" ||
-        item.priceVND
-          .toLowerCase()
-          .includes(filters.priceVND.toLowerCase());
+        item.priceVND.toLowerCase().includes(filters.priceVND.toLowerCase());
       return (
         matchesCode &&
         matchesnumToBasic &&
@@ -55,13 +54,13 @@ const Table = () => {
     });
   }, [mData, filters]);
 
-  //Memoized columns based on visibleColumns state
+  // //Memoized columns based on visibleColumns state
   const columns = useMemo(
     () =>
       [
         {
           header: "Code",
-          accessorKey: "Code",
+          accessorKey: "code",
           footer: "Code",
         },
         {
@@ -83,7 +82,7 @@ const Table = () => {
     [visibleColumns]
   );
 
-  // React Table hook setup
+  // // React Table hook setup
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -99,39 +98,82 @@ const Table = () => {
   });
 
   return (
-    <table>
-      <thead className="thead-dark">
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                onClick={header.column.getToggleSortingHandler()}
-              >
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                {{ asc: "🔼", desc: "🔽" }[header.column.getIsSorted() ?? null]}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <table className="data__table">
+        <thead className="thead-dark">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  class="th-right"
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  {
+                    { asc: "🔼", desc: "🔽" }[
+                      header.column.getIsSorted() ?? null
+                    ]
+                  }
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} class="content">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="pagination-feature">
+        <button
+          className="pagination-button"
+          onClick={() => {
+            table.setPageIndex(0);
+          }}
+        >
+          First Page
+        </button>
+        <button
+          className="pagination-button"
+          disabled={!table.getCanPreviousPage()}
+          onClick={() => {
+            table.previousPage();
+          }}
+        >
+          Previous
+        </button>
+        <button
+          className="pagination-button"
+          disabled={!table.getCanNextPage()}
+          onClick={() => {
+            table.nextPage();
+          }}
+        >
+          Next
+        </button>
+        <button
+          className="pagination-button"
+          onClick={() => {
+            table.setPageIndex(table.getPageCount() - 1);
+          }}
+        >
+          Last Page
+        </button>
+      </div>
+    </div>
   );
 };
 

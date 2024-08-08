@@ -2093,11 +2093,11 @@
 		"ISOnum": 548,
 		"symbol": "VT",
 		"symbolNative": "VT",
-		"minorSingle": "",
-		"minorPlural": "",
+		"minorSingle": "Cent",
+		"minorPlural": "Cent",
 		"ISOdigits": 0,
 		"decimals": 0,
-		"numToBasic": null
+		"numToBasic": 100
 	},
 	"WST": {
 		"name": "Samoan Tala",

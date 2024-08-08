@@ -1,78 +1,107 @@
-.data {
+.data__table {
   width: 100%;
-  margin: 50px 0;
+  margin-top: 50px;
 }
 
 table {
   border-collapse: collapse;
   border-radius: 10px !important;
-  border-style: hidden; /* hide standard table (collapsed) border */
-  box-shadow: 0 0 0 2px #00abf0; /* this draws the table border  */
+  border-style: hidden;
+  box-shadow: 0 0 0 1px #00abf0;
+  text-align: center;
 }
 
 td {
-  border: 1px solid #fbd2da !important;
+  border: 0px solid #00abf0 !important;
 }
 
 table tr:first-child th:first-child {
-  border-top-left-radius: 10px;
+  border-top-left-radius: 5px;
 }
 
 table tr:last-child td:first-child {
-  border-top-right-radius: 10px;
+  border-top-right-radius: 5px;
 }
 
 table tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 5px;
 }
 
 table tr:last-child th:first-child {
-  border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 5px;
 }
 
 th {
-  border: 1px solid #fbd2da !important;
-  background: #f9a4b5;
+  border: 0px solid #00abf0 !important;
 }
 
 th,
 td {
-  padding: 1em;
-  border-bottom: 2px solid white;
+  padding: 0.5em;
+  border-bottom: 1px solid white;
 }
 
 body {
   margin: 1.5em;
 }
 
+
 .th-right {
   width: 20%;
-  text-align: right;
+  text-align: center;
   font-weight: 100;
-  color: #fff;
-  padding-right: 23px;
+  font-style: Bold;
+  font-size: 1.3rem;
+  font-family: 'Times New Roman', Times, serif;
+  color: var(--secondary-color);
 }
 
 .content {
-  color: #adadad;
-  padding-left: 25px;
+  color: #ffffff;
+  padding-left: 10px;
+}
+
+/* Pagination feature */
+.pagination-feature {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  width: 120px;
+  height: 40px;
+  border: none;
+  background-color: #00abf0;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-button:not(:disabled):hover {
+  background-color: #00abf0;
 }
 
 @media only screen and (max-width: 992px) {
-  .newsletter__content h2 {
-    font-size: 2rem;
+  .pagination-button{
+    width: 100px;
+    height: 30px;
   }
-  .newsletter__img {
-    display: none;
-  }
+  
 }
 
 @media only screen and (max-width: 576px) {
-  .newsletter__content h2 {
-    font-size: 1.5rem;
+  .pagination-button{
+    width: 60px;
+    height: 20px;
   }
 
-  .newsletter__content p {
-    display: none;
-  }
+
 }

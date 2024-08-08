@@ -10,7 +10,7 @@ const Currency= () => {
   return <section className='currency'>
     <Container>
         <Row>
-            <Col lg='8'>
+            <Col lg='7'>
               <Table/>
             </Col>
             <Col lg='3'> 
