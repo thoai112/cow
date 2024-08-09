@@ -1,56 +1,51 @@
-import React from 'react';
-import './footer.css';
-import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
-
+import React from "react";
+import "./footer.css";
+import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.png";
 
 // add quick link
 const quick__links = [
   {
     path: "/home",
-    display: 'Home'
+    display: "Home",
   },
   {
     path: "/about",
-    display: 'About'
+    display: "About",
   },
   {
     path: "/tours",
-    display: 'Tours'
-  }
-]
+    display: "Tours",
+  },
+];
 
-
-// qucik link 2 
+// qucik link 2
 const quick__links2 = [
   {
     path: "/gallery",
-    display: 'Gallery'
+    display: "Gallery",
   },
   {
     path: "/login",
-    display: 'Login'
+    display: "Login",
   },
   {
     path: "/register",
-    display: 'Register'
-  }
-]
+    display: "Register",
+  },
+];
 
-
-
-// footer 
+// footer
 
 const Footer = () => {
-
   const year = new Date().getFullYear();
 
-
-  return <footer className='footer'>
-    <Container>
-      <Row>
-        {/* <Col lg='3'>
+  return (
+    <footer className="footer">
+      <Container>
+        <Row>
+          {/* <Col lg='3'>
           <div className="logo">
             <img src={logo} alt="logo" />
             <p> a copyright notice, link to a privacy policy, sitemap, logo, contact information, social media icons, and an email sign-up form.</p>
@@ -143,15 +138,18 @@ const Footer = () => {
   
 </ListGroup>
         </Col> */}
+          <div className="text-center">
+            <p className="copyright">
+              {" "}
+              &copy; Copyright {year}, design and developed by Cow. All rights
+              reserved.
+            </p>
+          </div>
+        </Row>
+      </Container>
+    </footer>
+  );
+};
 
-        <Col lg='12' className='text-center pt-5'>
-          <p className="copyright"> &copy; Copyright {year}, design and developed by Cow. All rights reserved.</p>
-        </Col>
-      </Row>
-    </Container>
-  </footer>
-
-}
-
-// export default 
+// export default
 export default Footer;

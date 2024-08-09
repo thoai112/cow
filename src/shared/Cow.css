@@ -1,8 +1,8 @@
 .cowcard {
   display: flex;
   position: absolute;
-  width: 50%;
-  margin: 50px 0;
+  width: 500px;
+  margin-top: 160px;
 }
 
 .cowcard__content {
@@ -25,6 +25,7 @@
   font-weight: 500;
   color: var(--secondary-color);
   display: flex;
+  margin-top: 10px;
 }
 
 .cowcard__content p {
@@ -35,6 +36,11 @@
   padding: 0 30px;
 }
 
+.cowcard__content span {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--secondary-color);
+}
 @media only screen and (max-width:992px) {
   .cowcard{
     width: 30%;

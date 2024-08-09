@@ -145,6 +145,7 @@
 .testimonial__title {
     font-size: 2.3rem;
     margin-top: 1rem;
+    display: flex;
 }
 
 /* Description */
@@ -202,6 +203,30 @@
     font-weight: 500;
     color: var(--secondary-color);
 }
+
+/* Notify */
+.cow__notify {
+    background: var(--third-color);
+    padding: 5rem 0;
+    display: flex;
+}
+
+.cow__notify-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cow__notify-content h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    font-weight: 500;
+    font-style: italic;
+}
+
+
 
 
 /* Animate */

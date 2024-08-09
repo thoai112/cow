@@ -5,11 +5,6 @@ import { BASE_URL } from './../utils/config';
 import { useNavigate } from 'react-router-dom';
 
 
-
-
-
-
-
 const SearchBar = () => {
 
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import dataJson from "../assets/data/currencies.json";
 
-const useCurrencyFetch = () => {
+const useCurrencyFetch = (date) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,7 @@ const useCurrencyFetch = () => {
   }));
 
   async function fetchCurrencyData(code) {
-    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${code.toLowerCase()}.json`;
+    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${code.toLowerCase()}.json`;
 
     try {
       const response = await fetch(url);
@@ -55,7 +55,7 @@ const useCurrencyFetch = () => {
 
   useEffect(() => {
     updateCurrencyData();
-  }, []);
+  }, [date]);
 
   return {
     data,

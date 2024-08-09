@@ -1,8 +1,8 @@
 import React from "react";
 import "./Cow.css";
-import { Card, CardBody } from "reactstrap";
 
-const Cow = () => {
+const Cow = ({averagePriceVND}) => {
+  console.log('day ne',averagePriceVND);
   return (
     // <!-- ========== Cow card start  ========== -->
     <div class="cowcard">
@@ -20,11 +20,10 @@ const Cow = () => {
           </span>{" "}
           + ... +{" "}
           <span className="math">
-            V<sub>152</sub>
+            V<sub>158</sub>
           </span>
-          ) / 152 <br></br>={" "}
-          <span className="text-[var(--primary-color)]">6.346,11 VND </span> ={" "}
-          <span className="text-[var(--primary-color)]">1 COW</span>
+          ) / 158 <br></br>
+          <span className="" >{averagePriceVND} VND = 1 COW </span>
         </p>
         <p>
           Where:

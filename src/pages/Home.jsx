@@ -95,7 +95,7 @@ const Home = () => {
 
       {/* <!-- ==========  Experience section Start   ========== --> */}
 
-      <section>
+      {/* <section>
         <Container>
           <Row>
             <Col lg="6">
@@ -139,13 +139,13 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       {/* <!-- ==========  Experience section end   ========== --> */}
 
       {/* <!-- ==========  Gallery section start   ========== --> */}
 
-      <section>
+      {/* <section>
         <Container>
           <Row>
             <Col lg="12">
@@ -159,28 +159,24 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       {/* <!-- ==========  Gallery section end   ========== --> */}
 
       {/* <!-- ==========  testimonial section start   ========== --> */}
 
-      <section>
+      <section className="cow__notify">
         <Container>
           <Row>
-            <Col lg="12">
-              <Subtitle subtitle={"Fans love"} />
-              <h2 className="testimonial__title">What our fans say about us</h2>
-            </Col>
-            <Col lg="12">
-              <Testimonial />
-            </Col>
+            <div className="cow__notify-content">
+              <h2 >Thanks You</h2>
+            </div>
           </Row>
         </Container>
       </section>
 
       {/* <!-- ==========  testimonial section end   ========== --> */}
-      <Newsletter />
+      {/* <Newsletter /> */}
     </>
   );
 };

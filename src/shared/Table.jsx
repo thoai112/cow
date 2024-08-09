@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./Table.css";
 import {
   useReactTable,
@@ -10,8 +10,26 @@ import {
   // getGroupedRowModel,
 } from "@tanstack/react-table";
 import useCurrencyFetch from "../hooks/useCurrencyFetch";
-const Table = () => {
+import Calendar from "./Calendar";
+
+const Table = ({ onAveragePriceChange }) => {
   const [sorting, setSorting] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}.${month}.${day}`;
+  };
+
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  };
+
   const [filters, setFilters] = useState({
     code: "",
     numToBasic: "",
@@ -25,7 +43,7 @@ const Table = () => {
     priceVND: true,
   });
 
-  const { data: mData, loading, error } = useCurrencyFetch();
+  const { data: mData, loading, error } = useCurrencyFetch(formatDate(selectedDate));
   console.log(mData);
   const filteredData = useMemo(() => {
     return mData.filter((item) => {
@@ -54,7 +72,20 @@ const Table = () => {
     });
   }, [mData, filters]);
 
-  // //Memoized columns based on visibleColumns state
+  const averagePriceVND = useMemo(() => {
+    const total = filteredData.reduce((sum, item) => {
+      return sum + parseFloat(item.priceVND);
+    }, 0);
+    const average = (total / filteredData.length) || 0;
+    return formatNumber(average);
+  }, [filteredData]);
+
+  useEffect(() => {
+    if (onAveragePriceChange) {
+      onAveragePriceChange(averagePriceVND);
+    }
+  }, [averagePriceVND, onAveragePriceChange]);
+
   const columns = useMemo(
     () =>
       [
@@ -98,8 +129,13 @@ const Table = () => {
   });
 
   return (
-    <div>
-      <table className="data__table">
+    <div className="data__table">
+      <h1> List Of Currency</h1>
+      <div className="cow__value">
+        <Calendar onDateChange={setSelectedDate} />
+        <h2>1 COW = {averagePriceVND} VND</h2>
+    </div>
+      <table>
         <thead className="thead-dark">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

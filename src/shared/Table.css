@@ -1,9 +1,30 @@
 .data__table {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+.data__table h1{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: var(--secondary-color);
+  margin-bottom: 30px;
+}
+
+.cow__value {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.cow__value h2{
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--secondary-color);
 }
 
 table {
+  height: 440px;
   border-collapse: collapse;
   border-radius: 10px !important;
   border-style: hidden;
@@ -49,7 +70,7 @@ body {
 .th-right {
   width: 20%;
   text-align: center;
-  font-weight: 100;
+  font-weight: 500;
   font-style: Bold;
   font-size: 1.3rem;
   font-family: 'Times New Roman', Times, serif;
