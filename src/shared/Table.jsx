@@ -90,22 +90,22 @@ const Table = ({ onAveragePriceChange }) => {
     () =>
       [
         {
-          header: "Code",
+          header: "Mã tiền tệ",
           accessorKey: "code",
           footer: "Code",
         },
         {
-          header: "Basic Unit",
+          header: "Đơn vị cơ bản",
           accessorKey: "numToBasic",
           footer: "Basic Unit",
         },
         {
-          header: "Fractional Unit",
+          header: "Đơn vị phần nhỏ",
           accessorKey: "minorSingle",
           footer: "Fractional Unit",
         },
         {
-          header: "Price VND",
+          header: "VND",
           accessorKey: "priceVND",
           footer: "Price VND",
         },
