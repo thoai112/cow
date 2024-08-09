@@ -118,10 +118,13 @@
 
 @media only screen and (max-width: 768px) {
   .logo img {
-    width: 12%;
+    width: 15%;
   }
   .header-title {
     font-size: 0.85rem;
+  }
+  .logo-text {
+    font-size: 0.70rem; 
   }
 
   .menu {
