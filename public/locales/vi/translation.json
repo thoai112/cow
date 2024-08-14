@@ -1,0 +1,12 @@
+{
+  "welcome": "Welcome to COW",
+  "welcome_content":"Chào mừng bạn đến với nơi có thể mua và bán, theo dõi thị trường hoặc chỉ đơn giản là theo dõi tin tức kinh tế...",
+  "login": "Đăng nhập",
+  "register":"Đăng ký",
+  "description_cow": {
+    "line1": "Cow (Coin Of World) được tạo ra bởi 1 thuật toán đơn giản nhất đó là Trung bình cộng.",
+    "line2": "Chúng tôi đã liệt kê tất cả các đồng tiền tệ từ các quốc gia và vùng lãnh thổ đang được lưu hành trên toàn thế giới và được công nhận bởi quốc tế (ISO 4217).",
+    "line3": "Theo thống kê của chúng tôi bao gồm 152 đòng tiền đang được lưu hành, tất cả đều được quy đổi giá trị ra tiền Việt Nam Đồng (VND). Chúng tôi cộng giá trị tất cả các loại tiền tệ theo giá trị VND và chia đều để tìm ra giá trị trung bình = 1 COW.",
+    "line4": "Với sự liên kết từ các quốc gia và tài chính. Tôi tin tưởng COW sẽ là đồng tiền không bị lạm phát và ổn định nhất thế giới. Để huỷ hoại COW, các bạn phải làm sụp đổ tài chính của tiền tệ tất cả các quốc gia."
+  }
+}
