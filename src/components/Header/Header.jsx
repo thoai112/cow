@@ -3,29 +3,36 @@ import { Container, Row, Button } from "reactstrap";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { AuthContext } from "./../../context/AuthContext";
-
 import logo from "../../assets/images/logocow.png";
+import { Trans, useTranslation } from "react-i18next";
+import "flag-icons/css/flag-icons.min.css";
+
+const languages = [
+  { code: "en", lang: "EN", flag: "us" },
+  { code: "vi", lang: "VN", flag: "vn" },
+];
 
 // nav links
-const nav__links = [
-  {
-    path: "/home",
-    display: 'Home'
-  },
-  {
-    path: "/about",
-    display: 'About'
-  },
-  {
-    path: "/tours",
-    display: 'Tours'
-  }
-]
+// const nav__links = [
+//   {
+//     path: "/home",
+//     display: "Home",
+//   },
+//   {
+//     path: "/about",
+//     display: "About",
+//   },
+//   {
+//     path: "/tours",
+//     display: "Tours",
+//   },
+// ];
 
 // header
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
+  const { i18n } = useTranslation();
 
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
@@ -49,6 +56,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+    document.body.dir = i18n.dir();
+  }, [i18n, i18n.language]);
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const selectedLanguage = languages.find((lng) => lng.code === i18n.language);
+
+  useEffect(() => {
     window.addEventListener("scroll", stickyHeaderFunc);
 
     return () => {
@@ -61,6 +78,9 @@ const Header = () => {
       menuRef.current.classList.toggle("show__menu");
     }
   };
+
+  const { t } = useTranslation();
+  // const { login, register } = t("description", { channel: "RoadsideCoder" });
 
   return (
     <header className="header" ref={headerRef}>
@@ -114,16 +134,24 @@ const Header = () => {
                 ) : (
                   <>
                     <Button className="btn secondary__btn">
-                      <Link to="/login">Login</Link>
+                      <Link to="/login">{t("login")}</Link>
                     </Button>
 
                     <Button className="btn primary__btn">
-                      <Link to="/register">Register</Link>
+                      <Link to="/register">{t("register")}</Link>
                     </Button>
                   </>
                 )}
               </div>
 
+              {/* Language Selector */}
+              <select defaultValue={i18n.language} onChange={(e) => changeLanguage(e.target.value)}>
+                {languages.map((language) => (
+                  <option key={language.code} value={language.code} className={`fi fi-${language.flag}`}>
+                    {language.lang}
+                  </option>
+                ))}
+              </select>
               {/* Mobile menu */}
               <span className="mobile__menu" onClick={toggleMenu}>
                 <i class="ri-menu-line"></i>

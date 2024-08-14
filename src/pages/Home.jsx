@@ -10,10 +10,12 @@ import Newsletter from "../shared/Newsletter";
 import logo from "../assets/images/logocow.png";
 import Currency from "../components/Currency/Currency";
 import Cow from "../shared/Cow";
+import { Trans, useTranslation } from "react-i18next";
 
 //home component
 
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <>
       {/* <!-- ========== Welcome section start  ========== --> */}
@@ -22,11 +24,8 @@ const Home = () => {
           <Row>
             <div className="welcome__content">
               <img className="animate-jump" src={logo} alt="" />
-              <h1>Welcome to COW</h1>
-              <p>
-                where you can buy and sell, monitor the market or simply follow
-                economic news...
-              </p>
+              <h1>{t("welcome")}</h1>
+              <p>{t("welcome_content")}</p>
             </div>
           </Row>
         </Container>
@@ -41,28 +40,10 @@ const Home = () => {
             <Col lg="6">
               <div className="description__content">
                 <h1>WHAT IS COW?</h1>
-                <p>
-                  Cow (Coin Of World) được tạo ra bởi 1 thuật toán đơn giản nhất
-                  đó là Trung bình cộng.
-                </p>
-                <p>
-                  Chúng tôi đã liệt kê tất cả các đồng tiền tệ từ các quốc gia
-                  và vùng lãnh thổ đang được lưu hành trên toàn thế giới và được
-                  công nhận bởi quốc tế (ISO 4217).
-                </p>
-                <p>
-                  Theo thống kê của chúng tôi bao gồm 152 đòng tiền đang được
-                  lưu hành, tất cả đều được quy đổi giá trị ra tiền Việt Nam
-                  Đồng (VND). Chúng tôi cộng giá trị tất cả các loại tiền tệ
-                  theo giá trị VND và chia đều để tìm ra giá trị trung bình = 1
-                  COW.
-                </p>
-                <p>
-                  Với sự liên kết từ các quốc gia và tài chính. Tôi tin tưởng
-                  COW sẽ là đồng tiền không bị lạm phát và ổn định nhất thế
-                  giới. Để huỷ hoại COW, các bạn phải làm sụp đổ tài chính của
-                  tiền tệ tất cả các quốc gia.
-                </p>
+                <p>{t("description_cow.line1")}</p>
+                <p>{t("description_cow.line2")}</p>
+                <p>{t("description_cow.line3")}</p>
+                <p>{t("description_cow.line4")}</p>
               </div>
             </Col>
             <Col lg="6">
@@ -77,9 +58,9 @@ const Home = () => {
       {/* <!-- ========== Description section end  ========== --> */}
 
       {/* <!-- ========== Table section start   ========== --> */}
- 
+
       <Currency />
-   
+
       {/* <section className="table">
         <Container>
           <Row>
@@ -169,7 +150,7 @@ const Home = () => {
         <Container>
           <Row>
             <div className="cow__notify-content">
-              <h2 >Thanks You</h2>
+              <h2>Thanks You</h2>
             </div>
           </Row>
         </Container>

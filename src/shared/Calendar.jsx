@@ -7,12 +7,15 @@ const Calendar = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = date => {
-    // Chuẩn hóa ngày bằng cách đặt giờ thành 12:00 trưa để tránh vấn đề múi giờ
-    const normalizedDate = new Date(date);
-    normalizedDate.setHours(12, 0, 0, 0);
+    // const normalizedDate = new Date(date);
+    // normalizedDate.setHours(12, 0, 0, 0);
     
-    setSelectedDate(normalizedDate);
-    onDateChange(normalizedDate);
+    // setSelectedDate(normalizedDate);
+    // onDateChange(normalizedDate);
+    const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0));
+    
+    setSelectedDate(utcDate);
+    onDateChange(utcDate);
   };
   return (
     <div className="calendar">

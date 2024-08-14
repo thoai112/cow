@@ -3,7 +3,7 @@
   margin-top: 20px;
 }
 
-.data__table h1{
+.data__table h1 {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -12,12 +12,24 @@
 }
 
 .cow__value {
-  width: 100%;
   display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-.cow__value h2{
+.cow__value .search-bar input {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 12px;
+}
+
+.search-bar input {
+  width: 10rem;
+}
+
+.cow__value h2 {
   font-size: 1rem;
   font-weight: 500;
   color: var(--secondary-color);
@@ -30,6 +42,7 @@ table {
   border-style: hidden;
   box-shadow: 0 0 0 1px #00abf0;
   text-align: center;
+  color: #ffffff;
 }
 
 td {
@@ -66,20 +79,32 @@ body {
   margin: 1.5em;
 }
 
-
 .th-right {
   width: 20%;
   text-align: center;
   font-weight: 500;
   font-style: Bold;
   font-size: 1.3rem;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   color: var(--secondary-color);
 }
 
 .content {
   color: #ffffff;
   padding-left: 10px;
+}
+
+/* Search bar */
+.highlight {
+  background-color: rgb(122, 221, 238);
+  color: #0f0f0f;
+}
+
+.search-bar {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Pagination feature */
@@ -110,21 +135,59 @@ body {
   background-color: #00abf0;
 }
 
+@media only screen and (max-width: 1400px) {
+
+  .search-bar input {
+    width: 8rem;
+  }
+
+}
+
+@media only screen and (max-width: 1240px) {
+
+  .search-bar input {
+    width: 7rem;
+  }
+  
+  .cow__value h2 {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+  }
+}
+
 @media only screen and (max-width: 992px) {
-  .pagination-button{
+  .pagination-button {
     width: 100px;
     height: 30px;
     font-size: 0.8rem;
   }
+
+  .search-bar input {
+    width: 9rem;
+  }
   
+  .cow__value h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+  }
 }
 
 @media only screen and (max-width: 576px) {
-  .pagination-button{
+  .pagination-button {
     width: 60px;
     height: 20px;
     font-size: 0.5rem;
   }
 
-
+  .search-bar input {
+    width: 6rem;
+  }
+  
+  .cow__value h2 {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+  }
 }
