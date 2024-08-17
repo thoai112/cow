@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 // import dataJson from "../assets/data/currencies.json";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5050");
+import { API_URL } from "../utils/config";
+const socket = io(`${API_URL}`);
 
 const useCurrencyFetch = url => {
   const [data, setData] = useState([]);
@@ -25,7 +26,7 @@ const useCurrencyFetch = url => {
     const getData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:5050/api/chart/currency')
+        const response = await fetch(url)
         const getData = response.json();
         setData(getData.currency.filter(item => item !== null));
         setCowValue(getData.cowValue);

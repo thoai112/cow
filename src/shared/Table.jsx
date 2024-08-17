@@ -30,8 +30,6 @@ const Table = ({ onAveragePriceChange }) => {
     return `${year}.${month}.${day}`;
   };
 
-  console.log(selectedDate);
-
   const formatNumber = (number) => {
     return new Intl.NumberFormat("de-DE", {
       minimumFractionDigits: 2,
