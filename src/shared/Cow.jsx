@@ -24,7 +24,7 @@ const Cow = ({averagePriceVND}) => {
   
   return (
     // <!-- ========== Cow card start  ========== -->
-    isVisible && (
+    (
       <div className="cowcard">
         <div className="cowcard__content">
           <h2>How it works</h2>

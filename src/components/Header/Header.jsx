@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Container, Row, Button } from "reactstrap";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { AuthContext } from "./../../context/AuthContext";
 import logo from "../../assets/images/logocow.png";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "flag-icons/css/flag-icons.min.css";
 
 const languages = [
@@ -33,6 +33,7 @@ const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { i18n } = useTranslation();
+  const [data, setData] = useState("");
 
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
@@ -63,7 +64,7 @@ const Header = () => {
     i18n.changeLanguage(lng);
   };
 
-  const selectedLanguage = languages.find((lng) => lng.code === i18n.language);
+  // const selectedLanguage = languages.find((lng) => lng.code === i18n.language);
 
   useEffect(() => {
     window.addEventListener("scroll", stickyHeaderFunc);
@@ -81,6 +82,15 @@ const Header = () => {
 
   const { t } = useTranslation();
   // const { login, register } = t("description", { channel: "RoadsideCoder" });
+  // useEffect(() => {
+  //   socket.on('message', () => {
+  //     console.log('Connected to the server');
+  //   });
+
+  //   return () => {
+  //     socket.off('connect');
+  //   };
+  // }, []);
 
   return (
     <header className="header" ref={headerRef}>
@@ -145,9 +155,16 @@ const Header = () => {
               </div>
 
               {/* Language Selector */}
-              <select defaultValue={i18n.language} onChange={(e) => changeLanguage(e.target.value)}>
+              <select
+                defaultValue={i18n.language}
+                onChange={(e) => changeLanguage(e.target.value)}
+              >
                 {languages.map((language) => (
-                  <option key={language.code} value={language.code} className={`fi fi-${language.flag}`}>
+                  <option
+                    key={language.code}
+                    value={language.code}
+                    className={`fi fi-${language.flag}`}
+                  >
                     {language.lang}
                   </option>
                 ))}

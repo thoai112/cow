@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table";
 import useCurrencyFetch from "../hooks/useCurrencyFetch";
 import Calendar from "./Calendar";
+import { API_URL } from "../utils/config";
 
 const Table = ({ onAveragePriceChange }) => {
   const [sorting, setSorting] = useState([]);
@@ -28,7 +29,9 @@ const Table = ({ onAveragePriceChange }) => {
     const day = date.getDate();
     return `${year}.${month}.${day}`;
   };
+
   console.log(selectedDate);
+
   const formatNumber = (number) => {
     return new Intl.NumberFormat("de-DE", {
       minimumFractionDigits: 2,
@@ -39,26 +42,22 @@ const Table = ({ onAveragePriceChange }) => {
   const [filters, setFilters] = useState({
     code: "",
     numToBasic: "",
-    minorSingle: "",
-    priceVND: "",
+    value: "",
   });
   const [visibleColumns, setVisibleColumns] = useState({
     code: true,
     numToBasic: true,
-    minorSingle: true,
-    priceVND: true,
+    value: true,
   });
 
-  const {
-    data: mData,
-    loading,
-    error,
-  } = useCurrencyFetch(formatDate(selectedDate));
+  const { data: mData, loading, error } = useCurrencyFetch(`${API_URL}/chart/currency`);
 
-  console.log(mData);
+  const currency = mData.currency || [];
+  const cowValue =
+    mData.cowvalue !== null ? parseFloat(mData.cowvalue).toFixed(2) : null;
 
   const filteredData = useMemo(() => {
-    return mData.filter((item) => {
+    return currency.filter((item) => {
       const matchesCode =
         filters.code === "" ||
         item.name.toLowerCase().includes(filters.code.toLowerCase());
@@ -67,36 +66,30 @@ const Table = ({ onAveragePriceChange }) => {
         item.numToBasic
           .toLowerCase()
           .includes(filters.numToBasic.toLowerCase());
-      const matchesminorSingle =
-        filters.minorSingle === "" ||
-        item.minorSingle
-          .toLowerCase()
-          .includes(filters.minorSingle.toLowerCase());
-      const matchespriceVND =
-        filters.priceVND === "" ||
-        item.priceVND.toLowerCase().includes(filters.priceVND.toLowerCase());
-      return (
-        matchesCode &&
-        matchesnumToBasic &&
-        matchesminorSingle &&
-        matchespriceVND
-      );
+      const matchesValue =
+        filters.value === "" ||
+        item.value
+        .toLowerCase()
+        .includes(filters.value.toLowerCase());
+      return matchesCode && matchesnumToBasic && matchesValue;
     });
-  }, [mData, filters]);
+  }, [currency, filters]);
 
-  const averagePriceVND = useMemo(() => {
-    const total = filteredData.reduce((sum, item) => {
-      return sum + parseFloat(item.priceVND);
-    }, 0);
-    const average = total / filteredData.length || 0;
-    return formatNumber(average);
-  }, [filteredData]);
+  // const averagePriceVND = useMemo(() => {
+  //   const total = filteredData.reduce((sum, item) => {
+  //     return sum + parseFloat(item.priceVND);
+  //   }, 0);
+  //   const average = total / filteredData.length || 0;
+  //   return formatNumber(average);
+  // }, [filteredData]);
 
   useEffect(() => {
     if (onAveragePriceChange) {
-      onAveragePriceChange(averagePriceVND);
+      onAveragePriceChange(cowValue);
     }
-  }, [averagePriceVND, onAveragePriceChange]);
+  }, [cowValue, onAveragePriceChange]);
+
+
 
   const columns = useMemo(
     () =>
@@ -112,13 +105,8 @@ const Table = ({ onAveragePriceChange }) => {
           footer: "Basic Unit",
         },
         {
-          header: "Đơn vị phần nhỏ",
-          accessorKey: "minorSingle",
-          footer: "Fractional Unit",
-        },
-        {
           header: "VND",
-          accessorKey: "priceVND",
+          accessorKey: "value",
           footer: "Price VND",
         },
       ].filter((column) => visibleColumns[column.accessorKey]),
@@ -162,7 +150,8 @@ const Table = ({ onAveragePriceChange }) => {
           </div>
         </div>
         <div className="col-3">
-          <h2>1 COW = {averagePriceVND} VND</h2>
+          <h2>1 COW = {cowValue} VND</h2>
+          {/* <h2>{getData}</h2> */}
         </div>
 
         {/* 

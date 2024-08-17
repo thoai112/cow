@@ -1,4 +1,4 @@
 export const BASE_URL = "https://tour-booking-server-rgel.onrender.com";
-export const API_URL = 'https://apelsin.money';
+export const API_URL = 'https://cow-be.vercel.app';
 
 
