@@ -50,7 +50,7 @@ const Table = ({ onAveragePriceChange }) => {
     value: true,
   });
 
-  const { data: mData, loading, error } = useCurrencyFetch(`${API_URL}/chart/currency`);
+  const { data: mData, loading, error } = useCurrencyFetch(`${API_URL}/api/chart/currency`);
 
   const currency = mData.currency || [];
   const cowValue =
