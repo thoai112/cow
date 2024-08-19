@@ -1,21 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/home.css";
 import { Container, Row, Col, Card } from "reactstrap";
-import Subtitle from "../shared/Subtitle";
-import FeaturedTourList from "../components/Featured-tour/FeaturedTourList";
-import experienceImg from "../assets/images/experience.png";
-import MasonryImagesGallery from "../components/Image-gallery/MasonryImagesGallery";
-import Testimonial from "../components/Testimonial/Testimonial";
-import Newsletter from "../shared/Newsletter";
 import logo from "../assets/images/logocow.png";
-import Currency from "../components/Currency/Currency";
 import Cow from "../shared/Cow";
+import Table from "../shared/Table";
 import { Trans, useTranslation } from "react-i18next";
 
 //home component
-
 const Home = () => {
   const { t } = useTranslation();
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isShowCow, setIsCowVisible] = useState(false);
+  const [averagePriceVND, setAveragePriceVND] = useState("");
+  const navigate = useNavigate();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCheckboxChange = (event) => {
+    if (event.target.checked) {
+      navigate("/home");
+    }
+  };
+
+  const handlePopupToggle = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
+  const handleAveragePriceChange = (averagePrice) => {
+    setAveragePriceVND(averagePrice);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currencySection = document.querySelector(".currency");
+      if (currencySection) {
+        const rect = currencySection.getBoundingClientRect();
+        // const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        const isVisible = rect.bottom <= window.innerHeight;
+        setIsCowVisible(isVisible);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {/* <!-- ========== Welcome section start  ========== --> */}
@@ -59,105 +93,74 @@ const Home = () => {
 
       {/* <!-- ========== Table section start   ========== --> */}
 
-      <Currency />
+      {/* <Currency /> */}
 
-      {/* <section className="table">
+      <section className="currency">
         <Container>
           <Row>
-            <Col lg="6">
-              <Cow />
+            <Col lg="7">
+              <Table onAveragePriceChange={handleAveragePriceChange} />
             </Col>
-
+            {isShowCow && (
+              <div className="currency-cow">
+                <Col lg="3">
+                  <Cow averagePriceVND={averagePriceVND} />
+                </Col>
+              </div>
+            )}
           </Row>
         </Container>
-      </section>  */}
+      </section>
 
       {/* <!-- ========== table section end   ========== --> */}
-
-      {/* <!-- ==========  Experience section Start   ========== --> */}
-
-      {/* <section>
-        <Container>
-          <Row>
-            <Col lg="6">
-              <div className="experience__content">
-                <Subtitle subtitle={"Experience"} />
-
-                <h2>
-                  With our all experience <br /> we will serve you
-                </h2>
-                <p>
-                  {" "}
-                  traveling around from place to place. a long journey including
-                  the visiting
-                  <br />
-                  of a number of places in sequence, especially with an
-                  organized group led by a guide.
-                </p>
-              </div>
-
-              <div className="counter__wrapper d-flex align-items-center gap-5">
-                <div className="counter__box">
-                  <span>12k+</span>
-                  <h6>Successful Trip</h6>
-                </div>
-
-                <div className="counter__box">
-                  <span>2k+</span>
-                  <h6>Regular Clients</h6>
-                </div>
-
-                <div className="counter__box">
-                  <span>15</span>
-                  <h6>Year Experience</h6>
-                </div>
-              </div>
-            </Col>
-            <Col lg="6">
-              <div className="experience__img">
-                <img src={experienceImg} alt="exp" />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section> */}
-
-      {/* <!-- ==========  Experience section end   ========== --> */}
-
-      {/* <!-- ==========  Gallery section start   ========== --> */}
-
-      {/* <section>
-        <Container>
-          <Row>
-            <Col lg="12">
-              <Subtitle subtitle={"Gallery"} />
-              <h2 className="gallery__title">
-                Visit our customers tour gallery{" "}
-              </h2>
-            </Col>
-            <Col lg="12">
-              <MasonryImagesGallery />
-            </Col>
-          </Row>
-        </Container>
-      </section> */}
-
-      {/* <!-- ==========  Gallery section end   ========== --> */}
 
       {/* <!-- ==========  testimonial section start   ========== --> */}
 
       <section className="cow__notify">
         <Container>
           <Row>
-            <div className="cow__notify-content">
-              <h2>Thanks You</h2>
+            <div className="cow__notify-row animate-jump">
+              <img src={logo} alt="cow" onClick={handlePopupToggle} />
+              <div className="cow__notify-content">
+                <h2 onClick={handlePopupToggle}>Go to Home</h2>
+              </div>
+            </div>
+            <div className="notify__content">
+              <p>{t("notify_cow.line1")}</p>
+              <p>{t("notify_cow.line2")}</p>
+              <p>{t("notify_cow.line3")}</p>
+              <p>{t("notify_cow.line4")}</p>
+              <p>{t("notify_cow.line5")}</p>
+              <p>{t("notify_cow.line6")}</p>
             </div>
           </Row>
         </Container>
+        {isPopupVisible && (
+          <div className="popup">
+            <div className="popup-content">
+              <span className="close" onClick={handlePopupToggle}>
+                &times;
+              </span>
+              <h1>{t("popup.title")}</h1>
+              <div className="popup-container">
+                <p>{t("popup.line1")}</p>
+                <p>{t("popup.line2")}</p>
+                <p>{t("popup.line3")}</p>
+                <p>{t("popup.line4")}</p>
+              </div>
+              <div class="checkboxes__item">
+                <label class="checkbox style-cb">
+                  <input type="checkbox" onChange={handleCheckboxChange} />
+                  <div class="checkbox__checkmark"></div>
+                  <div class="checkbox__body">{t("popup.line5")}</div>
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* <!-- ==========  testimonial section end   ========== --> */}
-      {/* <Newsletter /> */}
     </>
   );
 };

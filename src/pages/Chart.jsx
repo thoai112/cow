@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import "../style/thank-you.css"
 
 // thank you 
-const ThankYou = () => {
+const Chart= () => {
   return <section>
     <Container>
         <Row>
@@ -23,4 +23,4 @@ const ThankYou = () => {
   
 }
 
-export default ThankYou
+export default Chart

@@ -1,133 +1,76 @@
 import { useEffect, useState } from "react";
-// import dataJson from "../assets/data/currencies.json";
 import { io } from "socket.io-client";
 import { API_URL } from "../utils/config";
+import { formatDate } from "../utils/formatDate";
 const socket = io(`${API_URL}`);
 
-const useCurrencyFetch = url => {
+const useCurrencyFetch = (date) => {
   const [data, setData] = useState([]);
-  const [cowValue, setCowValue] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isRealTimeEnabled, setIsRealTimeEnabled] = useState(false);
 
   useEffect(() => {
-   
-    socket.on('connection', () => {
-      console.log('connected to server');
-    })
+    if (isRealTimeEnabled) {
+      socket.on("connection", () => {
+        console.log("connected to server");
+      });
 
-    socket.on('get-data', (newData) => {
-      setData(newData)
-    })
+      socket.on("get-data", (newData) => {
+        console.log("newData", newData);
+        setLoading(false);
+        setData(newData);
+      });
 
-  }, [])
+      return () => {
+        socket.off("connection");
+        socket.off("get-data");
+      };
+    }
+  }, [isRealTimeEnabled]);
 
   useEffect(() => {
     const getData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(url)
-        const getData = response.json();
-        setData(getData.currency.filter(item => item !== null));
-        setCowValue(getData.cowValue);
+        const presentTime = formatDate(new Date());
+        const selectedDate = formatDate(new Date(date));
+
+        const dateDifference =
+          new Date(presentTime).getDate() - new Date(selectedDate).getDate();
+        console.log("dateDifference", dateDifference);
+        let url;
+        if (dateDifference === 0) {
+          setIsRealTimeEnabled(true);
+          url = `${API_URL}/api/chart/currency`;
+        } else {
+          setIsRealTimeEnabled(false);
+          const params = new URLSearchParams({ date: selectedDate });
+          url = `${API_URL}/api/chart/currencydate?${params.toString()}`;
+        }
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const getData = await response.json();
+        setData(getData);
         setLoading(false);
       } catch (error) {
-          console.error("Error updating currency data:", error);
-          setError(error.message);
-          setLoading(false);
-        }
+        console.error("Error updating currency data:", error);
+        setError(error.message);
+        setLoading(false);
       }
+    };
 
     getData();
-  }, [url])
-
-
-  // async function fetchCurrencyData(code) {
-  //   const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${code.toLowerCase()}.json`;
-
-  //   try {
-  //     const response = await fetch(url);
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-
-  //     const responseData = await response.json();
-  //     const time = responseData.date;
-  //     const price = responseData[code.toLowerCase()].vnd;
-
-  //     const updatedItem = mData.find((item) => item.code === code);
-  //     if (updatedItem) {
-  //       updatedItem.priceVND = price;
-  //       updatedItem.timeUpdate = time;
-  //     }
-
-  //     return updatedItem;
-  //   } catch (error) {
-  //     console.error(`Error fetching currency data for ${code}:`, error);
-  //     return null;
-  //   }
-  // }
-
-
-
-  // let mData = Object.entries(dataJson).map(([code, details]) => ({
-  //   code,
-  //   ...details,
-  // }));
-
-  // async function fetchCurrencyData(code) {
-  //   const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${code.toLowerCase()}.json`;
-
-  //   try {
-  //     const response = await fetch(url);
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-
-  //     const responseData = await response.json();
-  //     const time = responseData.date;
-  //     const price = responseData[code.toLowerCase()].vnd;
-
-  //     const updatedItem = mData.find((item) => item.code === code);
-  //     if (updatedItem) {
-  //       updatedItem.priceVND = price;
-  //       updatedItem.timeUpdate = time;
-  //     }
-
-  //     return updatedItem;
-  //   } catch (error) {
-  //     console.error(`Error fetching currency data for ${code}:`, error);
-  //     return null;
-  //   }
-  // }
-
-  // async function updateCurrencyData() {
-  //   try {
-  //     setLoading(true);
-  //     const updatedData = await Promise.all(
-  //       mData.map(({ code }) => fetchCurrencyData(code))
-  //     );
-  //     setData(updatedData.filter(item => item !== null));
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error updating currency data:", error);
-  //     setError(error.message);
-  //     setLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   updateCurrencyData();
-  // }, [date]);
+  }, [date]);
 
   return {
     data,
-    cowValue,
     error,
     loading,
   };
 };
 
 export default useCurrencyFetch;
+

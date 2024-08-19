@@ -100,7 +100,7 @@ const Header = () => {
             {/* <!-- ========== Start Logo Section ========== -->*/}
 
             <div className="logo header-title">
-              <Link to="/home" className="logo-link">
+              <Link to="/" className="logo-link">
                 <img src={logo} alt="logo" className="logo-image" />
                 <span className="logo-text">COW OF WORLD</span>
               </Link>
@@ -171,7 +171,7 @@ const Header = () => {
               </select>
               {/* Mobile menu */}
               <span className="mobile__menu" onClick={toggleMenu}>
-                <i class="ri-menu-line"></i>
+                <i className="ri-menu-line"></i>
               </span>
             </div>
           </div>

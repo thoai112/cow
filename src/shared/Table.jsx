@@ -7,52 +7,41 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   getFilteredRowModel,
-  // getGroupedRowModel,
 } from "@tanstack/react-table";
 import useCurrencyFetch from "../hooks/useCurrencyFetch";
 import Calendar from "./Calendar";
-import { API_URL } from "../utils/config";
+import { formatDate } from "../utils/formatDate";
 
 const Table = ({ onAveragePriceChange }) => {
   const [sorting, setSorting] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   // Pagination Data
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  // const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   // Search matching rows
   const [searchTerm, setSearchTerm] = useState("");
 
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}.${month}.${day}`;
-  };
-
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat("de-DE", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(number);
-  };
-
-  const [filters, setFilters] = useState({
+  const [filters] = useState({
     code: "",
     numToBasic: "",
     value: "",
   });
-  const [visibleColumns, setVisibleColumns] = useState({
+  const [visibleColumns] = useState({
     code: true,
     numToBasic: true,
     value: true,
   });
 
-  const { data: mData, loading, error } = useCurrencyFetch(`${API_URL}/api/chart/currency`);
+  const {
+    data: mData,
+    loading,
+  } = useCurrencyFetch(formatDate(selectedDate));
 
-  const currency = mData.currency || [];
   const cowValue =
     mData.cowvalue !== null ? parseFloat(mData.cowvalue).toFixed(2) : null;
+
+  const currency = useMemo(() => mData.currency || [], [mData.currency]);
 
   const filteredData = useMemo(() => {
     return currency.filter((item) => {
@@ -66,28 +55,16 @@ const Table = ({ onAveragePriceChange }) => {
           .includes(filters.numToBasic.toLowerCase());
       const matchesValue =
         filters.value === "" ||
-        item.value
-        .toLowerCase()
-        .includes(filters.value.toLowerCase());
+        item.value.toLowerCase().includes(filters.value.toLowerCase());
       return matchesCode && matchesnumToBasic && matchesValue;
     });
   }, [currency, filters]);
-
-  // const averagePriceVND = useMemo(() => {
-  //   const total = filteredData.reduce((sum, item) => {
-  //     return sum + parseFloat(item.priceVND);
-  //   }, 0);
-  //   const average = total / filteredData.length || 0;
-  //   return formatNumber(average);
-  // }, [filteredData]);
 
   useEffect(() => {
     if (onAveragePriceChange) {
       onAveragePriceChange(cowValue);
     }
   }, [cowValue, onAveragePriceChange]);
-
-
 
   const columns = useMemo(
     () =>
@@ -106,6 +83,15 @@ const Table = ({ onAveragePriceChange }) => {
           header: "VND",
           accessorKey: "value",
           footer: "Price VND",
+          cell: ({ row }) => {
+            const newValue = parseFloat(row.original.value).toFixed(2);
+            const previousValue = parseFloat(
+              row.original.valuePrevious
+            ).toFixed(2);
+            const color = newValue > previousValue ? "value-up" : "value-down";
+            return <span className={color}>{newValue}</span>;
+          },
+          //cell: ({ getValue }) => parseFloat(getValue()).toFixed(2),
         },
       ].filter((column) => visibleColumns[column.accessorKey]),
     [visibleColumns]
@@ -149,19 +135,7 @@ const Table = ({ onAveragePriceChange }) => {
         </div>
         <div className="col-3">
           <h2>1 COW = {cowValue} VND</h2>
-          {/* <h2>{getData}</h2> */}
         </div>
-
-        {/* 
-        <h2>1 COW = {averagePriceVND} VND</h2>
-        <div className="search-bar">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Search..."
-          />
-        </div> */}
       </div>
       <table>
         <thead className="thead-dark">
@@ -171,7 +145,7 @@ const Table = ({ onAveragePriceChange }) => {
                 <th
                   key={header.id}
                   onClick={header.column.getToggleSortingHandler()}
-                  class="th-right"
+                  className="th-right"
                 >
                   {header.isPlaceholder
                     ? null
@@ -190,26 +164,42 @@ const Table = ({ onAveragePriceChange }) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => {
-            const rowData = row.original;
-            const isHighlighted =
-              searchTerm &&
-              Object.values(rowData).some((value) =>
-                value
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase())
+          {loading ? (
+            <tr>
+              <td colSpan={columns.length}>
+                <div className="load">
+                  <hr />
+                  <hr />
+                  <hr />
+                  <hr />
+                </div>
+              </td>
+            </tr>
+          ) : (
+            table.getRowModel().rows.map((row) => {
+              const rowData = row.original;
+              const isHighlighted =
+                searchTerm &&
+                Object.values(rowData).some((value) =>
+                  value
+                    .toString()
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                );
+              return (
+                <tr key={row.id} className={isHighlighted ? "highlight" : ""}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
               );
-            return (
-              <tr key={row.id} className={isHighlighted ? "highlight" : ""}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
+            })
+          )}
         </tbody>
       </table>
       <div className="pagination-feature">

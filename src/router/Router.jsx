@@ -7,13 +7,15 @@ import SearchResultList from '../pages/SearchResultList';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import ThankYou from '../pages/ThankYou';
+import Chart from '../pages/Chart';
 
 // routes
 const Router = () => {
   return (
-   <Routes basename="/home">
-    <Route path='/' element={<Navigate to='/home' /> } />
-    <Route path='/home' element={<Home/>} />
+   <Routes basename="/">
+    {/* <Route path='/' element={<Navigate to='/home' /> } /> */}
+    <Route path='/' element={<Home/>} />
+    <Route path='/home' element={<Chart/>} />
     <Route path='/tours' element={<Tour/>} />
     <Route path='/tours/:id' element={<TourDetails/>} />
     <Route path='/login' element={<Login/>} />
