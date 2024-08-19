@@ -29,6 +29,7 @@
     "remixicon": "^2.5.0",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.5",
+    "swr": "^2.2.5",
     "vercel": "^32.5.3",
     "web-vitals": "^2.1.4"
   },
