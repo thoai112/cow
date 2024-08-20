@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"; // Added missing imports
+import { useNavigate } from "react-router-dom"; // Added missing imports
 import "../style/home.css";
-import { Container, Row, Col, Card } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import logo from "../assets/images/logocow.png";
 import Cow from "../shared/Cow";
 import Table from "../shared/Table";
@@ -15,9 +15,9 @@ const Home = () => {
   const [averagePriceVND, setAveragePriceVND] = useState("");
   const navigate = useNavigate();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
 
   const handleCheckboxChange = (event) => {
     if (event.target.checked) {

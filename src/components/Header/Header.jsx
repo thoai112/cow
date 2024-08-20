@@ -33,7 +33,6 @@ const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { i18n } = useTranslation();
-  const [data, setData] = useState("");
 
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);

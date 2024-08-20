@@ -1,40 +1,38 @@
 import React from "react";
 import "./footer.css";
-import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
-import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import { Container, Row,} from "reactstrap";
 
 // add quick link
-const quick__links = [
-  {
-    path: "/home",
-    display: "Home",
-  },
-  {
-    path: "/about",
-    display: "About",
-  },
-  {
-    path: "/tours",
-    display: "Tours",
-  },
-];
+// const quick__links = [
+//   {
+//     path: "/home",
+//     display: "Home",
+//   },
+//   {
+//     path: "/about",
+//     display: "About",
+//   },
+//   {
+//     path: "/tours",
+//     display: "Tours",
+//   },
+// ];
 
 // qucik link 2
-const quick__links2 = [
-  {
-    path: "/gallery",
-    display: "Gallery",
-  },
-  {
-    path: "/login",
-    display: "Login",
-  },
-  {
-    path: "/register",
-    display: "Register",
-  },
-];
+// const quick__links2 = [
+//   {
+//     path: "/gallery",
+//     display: "Gallery",
+//   },
+//   {
+//     path: "/login",
+//     display: "Login",
+//   },
+//   {
+//     path: "/register",
+//     display: "Register",
+//   },
+// ];
 
 // footer
 
