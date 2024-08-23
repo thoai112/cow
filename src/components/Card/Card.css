@@ -1,0 +1,83 @@
+.cardDetail {
+  border: 1px solid #55c7e4;
+  padding: 0.1rem 0.2rem;
+  border-radius: 1.1rem;
+  width: 100%;
+  background-color: #11111120;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.cardDetail__currency {
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  text-align: center;
+  margin-left: 1%;
+}
+
+.cardDetail__columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .cardDetail__chart {
+  margin:0 0 0 0;
+} */
+
+.cardDetail__column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+ 
+}
+
+.cardDetail__column--price {
+  font-size: 1rem;
+  color : var(--text-color);
+  align-items: center;
+}
+
+.cardDetail__column--valuechange {
+  font-size: 1rem;
+  color: #1dd82d;
+}
+
+/* response */
+
+@media only screen and (max-width: 1200px) {
+  .cardDetail__currency {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .cardDetail__column--price, .cardDetail__column--valuechange {
+    font-size: 0.9rem;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .cardDetail__currency {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+
+  .cardDetail__column--price, .cardDetail__column--valuechange {
+    font-size: 0.7rem;
+  }
+  
+}
+
+@media only screen and (max-width: 576px) {
+  .cardDetail__currency {
+    font-size: 0.6rem;
+    font-weight: 400;
+  }
+
+  .cardDetail__column--price, .cardDetail__column--valuechange {
+    font-size: 0.6rem;
+  }
+}

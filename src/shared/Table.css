@@ -136,24 +136,55 @@ body {
 }
 /* LOAD DATA */
 
-.load{top:50%;left:50%;transform:translate(-50%, -50%);
+.load {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
-  width:60px;
-  height:60px;
+  width: 60px;
+  height: 60px;
 }
-.load hr{border:0;margin:0;width:40%;height:40%;position:absolute;border-radius:50%;animation:spin 2s ease infinite}
+.load hr {
+  border: 0;
+  margin: 0;
+  width: 40%;
+  height: 40%;
+  position: absolute;
+  border-radius: 50%;
+  animation: spin 2s ease infinite;
+}
 
-.load :first-child{background:#19A68C;animation-delay:-1.5s}
-.load :nth-child(2){background:#F63D3A;animation-delay:-1s}
-.load :nth-child(3){background:#FDA543;animation-delay:-0.5s}
-.load :last-child{background:#193B48}
+.load :first-child {
+  background: #19a68c;
+  animation-delay: -1.5s;
+}
+.load :nth-child(2) {
+  background: #f63d3a;
+  animation-delay: -1s;
+}
+.load :nth-child(3) {
+  background: #fda543;
+  animation-delay: -0.5s;
+}
+.load :last-child {
+  background: #193b48;
+}
 
-@keyframes spin{
-  0%,100%{transform:translate(0)}
-  25%{transform:translate(160%)}
-  50%{transform:translate(160%, 160%)}
-  75%{transform:translate(0, 160%)}
+@keyframes spin {
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(160%);
+  }
+  50% {
+    transform: translate(160%, 160%);
+  }
+  75% {
+    transform: translate(0, 160%);
+  }
 }
 .value-up span {
   color: green;
@@ -163,21 +194,17 @@ body {
   color: red;
 }
 
-
 @media only screen and (max-width: 1400px) {
-
   .search-bar input {
     width: 8rem;
   }
-
 }
 
 @media only screen and (max-width: 1240px) {
-
   .search-bar input {
     width: 7rem;
   }
-  
+
   .cow__value h2 {
     font-size: 0.7rem;
     font-weight: 400;
@@ -186,6 +213,9 @@ body {
 }
 
 @media only screen and (max-width: 992px) {
+  .data__table {
+    width: 60%;
+  }
   .pagination-button {
     width: 100px;
     height: 30px;
@@ -195,11 +225,15 @@ body {
   .search-bar input {
     width: 9rem;
   }
-  
+
   .cow__value h2 {
     font-size: 1rem;
     font-weight: 500;
     color: var(--secondary-color);
+  }
+
+  .th-right {
+    font-size: 1.1rem;
   }
 }
 
@@ -213,7 +247,7 @@ body {
   .search-bar input {
     width: 6rem;
   }
-  
+
   .cow__value h2 {
     font-size: 0.85rem;
     font-weight: 400;

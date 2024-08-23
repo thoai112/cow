@@ -95,7 +95,7 @@ const Header = () => {
     <header className="header" ref={headerRef}>
       <Container>
         <Row>
-          <div className="nav__wrapper d-flex align-items-center justify-content-between">
+          <div className="nav__wrapper">
             {/* <!-- ========== Start Logo Section ========== -->*/}
 
             <div className="logo header-title">
@@ -109,8 +109,8 @@ const Header = () => {
 
             {/* <!-- ========== Start Menu Section ========== --> */}
 
-            <div className="navigation" ref={menuRef} onClick={toggleMenu}>
-              {/* <ul className="menu d-flex align-items-center gap-5">
+            {/* <div className="navigation" ref={menuRef} onClick={toggleMenu}>
+               <ul className="menu d-flex align-items-center gap-5">
               {
                 nav__links.map((item, index) => {
                   return (
@@ -122,57 +122,55 @@ const Header = () => {
                   )
                 })
               }
-            </ul> */}
-            </div>
+            </ul> 
+            </div> */}
 
             {/* <!-- ========== End Menu Section ========== --> */}
 
-            <div className="nav__right d-flex align-items-center gap-4">
-              <div className="nav__btns d-flex align-items-center gap-4">
-                {user ? (
-                  <>
-                    <h5 className="mb-0">{user.username}</h5>
-                    <Button
-                      className="btn btn-logout"
-                      style={{ background: "orange", border: "none" }}
-                      onClick={logout}
-                    >
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button className="btn secondary__btn">
-                      <Link to="/login">{t("login")}</Link>
-                    </Button>
-
-                    <Button className="btn primary__btn">
-                      <Link to="/register">{t("register")}</Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-
-              {/* Language Selector */}
-              <select
-                defaultValue={i18n.language}
-                onChange={(e) => changeLanguage(e.target.value)}
-              >
-                {languages.map((language) => (
-                  <option
-                    key={language.code}
-                    value={language.code}
-                    className={`fi fi-${language.flag}`}
+            <div className="information">
+              {user ? (
+                <>
+                  <h5 className="mb-0">{user.username}</h5>
+                  <Button
+                    className="btn btn-logout"
+                    style={{ background: "orange", border: "none" }}
+                    onClick={logout}
                   >
-                    {language.lang}
-                  </option>
-                ))}
-              </select>
-              {/* Mobile menu */}
-              <span className="mobile__menu" onClick={toggleMenu}>
-                <i className="ri-menu-line"></i>
-              </span>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button className="btn secondary__btn">
+                    <Link to="/login">{t("login")}</Link>
+                  </Button>
+
+                  <Button className="btn primary__btn">
+                    <Link to="/register">{t("register")}</Link>
+                  </Button>
+                </>
+              )}
             </div>
+
+            {/* Language Selector */}
+            <select className="language__selector"
+              defaultValue={i18n.language}
+              onChange={(e) => changeLanguage(e.target.value)}
+            >
+              {languages.map((language) => (
+                <option
+                  key={language.code}
+                  value={language.code}
+                  className={`fi fi-${language.flag}`}
+                >
+                  {language.lang}
+                </option>
+              ))}
+            </select>
+            {/* Mobile menu */}
+            <span className="mobile__menu" onClick={toggleMenu}>
+              <i className="ri-menu-line"></i>
+            </span>
           </div>
         </Row>
       </Container>

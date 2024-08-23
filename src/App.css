@@ -97,13 +97,13 @@ ul {
 
 
 @media only screen and (max-width:992px) { 
-  .primary__btn a, .secondary__btn a {
+  /* .primary__btn a, .secondary__btn a {
     font-size: 0.9rem;
   }
 
   .primary__btn, .secondary__btn, .btn-logout {
     padding: 0.2rem 1.1rem !important;
-  }
+  } */
 
   section {
     padding: 40px 0;
@@ -115,4 +115,11 @@ ul {
   .section__subtitle {
     font-size: 1.3rem;
   }
+
+  .primary__btn a, .secondary__btn a, .primary__btn, .secondary__btn, .btn-logout, .secondary__btn a:hover  {
+   display: none;
+  }
+
+
 }
+

@@ -1,0 +1,77 @@
+
+.convertWrapper {
+    display: flex;
+    margin-top: 3rem;
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1.5px solid #55c7e4;
+
+}
+
+.convertWrapper .convertIcon {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100rem;
+}
+
+.convertWrapper .coin {
+    background-color: #081b29;
+}
+
+.convertWrapper .usd {
+    background-color: #61c9db70;
+}
+
+.convertWrapper .icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.convertWrapper .coin,
+.convertWrapper .usd {
+    display: flex;
+    align-items: center;
+    
+    padding: 1rem 1rem;
+}
+
+.convertWrapper .coin .symbol,
+.convertWrapper .usd .symbol {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.convertWrapper .coin .fullName,
+.convertWrapper .usd .fullName {
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 450;
+    justify-items: auto;
+    color: var(--text-color);
+}
+
+.convertWrapper .coin .icon,
+.convertWrapper .usd .icon {
+    margin-right: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.convertWrapper .coin input,
+.convertWrapper .usd input {
+    color: var(--text-color);
+    flex: 1;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    text-align: end;
+    font-size: 1rem;
+    font-weight: 450;
+    margin-right: 20px;
+}

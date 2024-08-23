@@ -1,0 +1,238 @@
+.chartDetailWrapper .chartHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+}
+
+.chartHeader__currency {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.currency__container {
+  display: flex;
+  align-items: center;
+}
+
+
+.chartHeader__currency h2 {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+  display: flex;
+}
+
+.currency__name,
+.percentage__change {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+.currency__conversion{
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+.chartHeader__price {
+  font-size: 1.2rem;
+  text-align: end;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-right: 2rem;
+}
+
+.chartDetailWrapper .headingChart {
+  display: flex;
+  margin-right: 5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.chartDetailWrapper .headingChart .expandBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 100rem;
+  margin-right: 1rem;
+  color: #fff;
+}
+
+.chartDetailWrapper .headingChart .expandBtn:hover {
+  background-color: #323546;
+}
+
+.chartDetailWrapper .headingChart .listPeriod {
+  display: inline-block;
+  padding: 0.3rem;
+  background-color: #323546;
+  border-radius: 0.8rem;
+}
+
+.chartDetailWrapper .headingChart .listPeriod .active {
+  background-color: #20263e;
+}
+
+.chartDetailWrapper .headingChart .listPeriod .timePeriod {
+  display: inline-block;
+  color: #fff;
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.chartDetailWrapper .headingChart .listPeriod .timePeriod:hover {
+  background-color: #20263e;
+}
+
+.recharts-wrapper {
+  font-size: 1.2rem;
+  /* width: 100% !important; */
+  /* height: 100% !important; */
+}
+
+.recharts-surface {
+  width: 100%;
+  height: 100%;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-tooltip-wrapper .custom-tooltip {
+  min-width: 200px;
+  outline: 1px solid #38ebf8;
+  padding: 1rem;
+  background-color: #323546;
+  border-radius: 0.8rem;
+}
+
+.recharts-tooltip-wrapper .custom-tooltip .label span {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.recharts-tooltip-wrapper .custom-tooltip .intro {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* .recharts-tooltip-wrapper .custom-tooltip .intro .time {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size:0.8rem;
+} */
+
+.recharts-cartesian-axis-ticks text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  fill: var(--text-color);
+}
+
+.recharts-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  fill: var(--text-color);
+}
+
+.recharts-brush {
+  fill: #fff;
+  fill-opacity: 0.5;
+}
+
+.recharts-brush .recharts-brush-texts .recharts-text {
+  fill: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  fill-opacity: 0.3;
+}
+
+.recharts-brush .recharts-brush-slide {
+  fill-opacity: 0.3;
+  fill: #49494965;
+}
+
+
+.chart__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rowdata {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  color: var(--text-color);
+}
+
+@media only screen and (max-width: 1500px) {
+  .chartDetailWrapper .headingChart .listPeriod {
+    padding: 0.3rem;
+  }
+  .chartDetailWrapper .headingChart .listPeriod .timePeriod {
+    padding: 0.4rem;
+  }
+  .chartHeader__price, .currency__conversion {
+    font-size: 0.9rem;
+  }
+  .currency__name, .percentage__change {
+    font-size: 1.1rem;
+  }
+
+  .chartDetailWrapper .headingChart {
+   
+    margin-right: 1rem;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (max-width: 929px) {
+  .chartDetailWrapper .headingChart .listPeriod {
+    padding: 0.2rem;
+  }
+  .chartDetailWrapper .headingChart .listPeriod .timePeriod {
+    padding: 0.4rem;
+  }
+  .chartHeader__price, .currency__conversion {
+    font-size: 0.8rem;
+  }
+  .currency__name, .percentage__change {
+    font-size: 0.9rem;
+  }
+}
+
+
+@media only screen and (max-width: 576px) {
+
+  .chartDetailWrapper .headingChart .listPeriod {
+    padding: 0.1rem;
+  }
+  .chartDetailWrapper .headingChart .listPeriod .timePeriod {
+    padding: 0.3rem;
+  }
+  .chartHeader__price, .chartHeader__price {
+    font-size: 0.6rem;
+  }
+  .currency__name, .percentage__change {
+    font-size: 0.7rem;
+  }
+}
+
+

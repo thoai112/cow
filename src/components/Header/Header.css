@@ -5,8 +5,13 @@
   background-color: #081b29;
 }
 
+.nav__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .logo img {
-  width: 12%;
+  width: 15%;
 }
 
 .logo {
@@ -56,8 +61,16 @@
 
 .mobile__menu {
   font-size: 1.3rem;
-  color: var(--heading-color);
+  color:  var(--secondary-color);
   display: none;
+}
+
+.information {
+  display: flex;
+  align-items: end;
+  text-align: end;
+  justify-content: space-between;
+
 }
 
 .sticky__header {
@@ -72,6 +85,38 @@
   z-index: 999;
 }
 
+.language-selector {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  margin: 0 10 0 10;
+}
+
+.language-dropdown {
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.dropdown-icons {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.dropdown-item .fi {
+  margin-right: 8px;
+}
+
+.dropdown-item.selected {
+  font-weight: bold;
+  color: #007bff;
+}
 /* responsive */
 
 @media only screen and (max-width: 992px) {
@@ -107,46 +152,7 @@
     z-index: 9999;
   }
 
-  .show__menu {
-    display: block;
-  }
-
-  .mobile__menu {
-    display: block;
-  }
-}
-
-
-.language-selector {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.language-dropdown {
-  margin-bottom: 10px;
-  padding: 5px;
-  font-size: 16px;
-}
-
-.dropdown-icons {
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.dropdown-item .fi {
-  margin-right: 8px;
-}
-
-.dropdown-item.selected {
-  font-weight: bold;
-  color: #007bff; /* Change to your desired highlight color */
+ 
 }
 
 @media only screen and (max-width: 768px) {
@@ -157,10 +163,42 @@
     font-size: 0.85rem;
   }
   .logo-text {
-    font-size: 0.70rem; 
+    font-size: 0.9rem;
+  }
+
+
+  .show__menu {
+    display: block;
+    color: #fff;
+  }
+
+  .mobile__menu {
+    display: block;
   }
 
   .menu {
     width: calc(100% -50%);
   }
+
+  .information, .language__selector{
+    display: none;
+  }
+
+
+  
+}
+
+@media screen and (max-width: 500px) {
+
+  .logo-text {
+    font-size: 0.5rem;
+  }
+  .language-dropdown {
+    padding: 3px;
+    font-size: 0.7rem;
+  }
+  .information, .language__selector{
+    display: none;
+  }
+
 }

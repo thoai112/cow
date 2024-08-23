@@ -1,0 +1,70 @@
+.topbar__cards {
+  margin-top: 2rem;
+  border: 1px solid #55c7e4;
+  width: 100%;
+  height: 200px;
+  padding: 20px;
+  background-color: #11111120;
+  border-radius: 1rem;
+}
+
+.topbar-cards .trending__card {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #11111120;
+}
+
+.trending__card .carousel-indicators {
+  bottom: -28px;
+}
+.trending__card .carousel-indicators .active {
+  background-color: #fff;
+  opacity: 1;
+}
+.trending__card .carousel-indicators button {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+/* .trending__card .carousel-inner {
+  height: 80%;
+} */
+.trending__card .carousel-inner .carousel-item {
+  max-width: 416px;
+  min-width: 416px;
+  min-height: 100%;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+/* .trending__card .carousel-inner .carousel-item:first-child {
+  background-color: #0d1421;
+} */
+.trending__card .carousel-control-next,
+.trending__card .carousel-control-prev {
+  display: none;
+}
+
+
+/* Style for the top div */
+.top {
+  font-size: 1.2rem;
+  font-weight: 500;
+  align-items: center;
+  justify-content: center;
+  text-align:start;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
+/* Custom styles for the image */
+.custom-img {
+  width: 65%;
+  height: 130px;
+  border: 2px solid #000;
+  border-radius: 8px;
+}

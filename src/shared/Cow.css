@@ -3,7 +3,6 @@
   position: absolute;
   width: 500px;
   margin-top: 160px;
-  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   
@@ -49,6 +48,7 @@
 @media only screen and (max-width: 1300px) {
   .cowcard {
     width: 350px;
+    margin-left: 20px;
   }
   .cowcard__content {
     background-color: transparent;
@@ -69,9 +69,9 @@
 }
 
 @media only screen and (max-width: 992px) {
-  .cowcard {
+  /* .cowcard {
     display: none;
-  }
+  } 
   .cowcard__content {
     display: none;
     background-color: transparent;
@@ -84,7 +84,7 @@
 
   .cowcard__content p {
     display: none;
-  }
+  }*/
 }
 
 @media only screen and (max-width: 576px) {
