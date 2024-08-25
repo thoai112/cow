@@ -7,9 +7,10 @@ import Converter from "../components/Converter/Converter";
 import Card from "../components/Card/Card";
 import LastNew from "../components/LastNew/LastNew";
 import Trending from "../components/Trending/Trending";
+import useFetchLiveChart from "../hooks/useFetchLiveChart";
 
 const Chart = () => {
-  const [isNews, setIsNews] = useState(false);
+  const [isNews, setIsNews] = useState(true);
   useEffect(() => {
     const rightSidebarElement = document.querySelector(".right-sidebar");
     const mainContentElement = document.querySelector(".main-content");
@@ -25,6 +26,10 @@ const Chart = () => {
       };
     }
   }, []);
+  
+  const { data: mData, loading } = useFetchLiveChart("AED");
+
+  console.log("data not swr", mData);
 
   const { data, isFetching } = useGetCryptoQuery({
     coinId: "a91GCGd_u96cF",
