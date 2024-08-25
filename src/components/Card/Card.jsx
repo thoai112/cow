@@ -22,7 +22,7 @@ const Card = ({ coinDetail }) => {
   ];
   const { data: coinHistory } = useGetCryptoHistoryQuery({
     coinId: coinDetail?.uuid,
-    timePeriod: "7d",
+    timePeriod: "1y",
   });
   const coinPrice = [];
   const coinTimestamp = [];
@@ -37,7 +37,7 @@ const Card = ({ coinDetail }) => {
 
   const data = coinPrice.map((coin, index) => {
     return {
-      TimeLabel: moment(coinTimestamp[index] * 1000).format(listFormat["7dh"]),
+      TimeLabel: moment(coinTimestamp[index] * 1000).format(listFormat["1y"]),
       time: coinTimestamp[index],
       price: Number(coin),
       timeConvert: convertDate(coinTimestamp[index]),
@@ -46,26 +46,32 @@ const Card = ({ coinDetail }) => {
 
   const reverseDatax = data.reverse();
 
-  console.log("mikiyayaya", reverseDatax);
-
   return (
     <>
       <div className="cardDetail">
         <div className="cardDetail__columns">
           <div className="cardDetail__currency">USD/VND</div>
 
-          <ResponsiveContainer width={"99%"} height={55}>
+          <ResponsiveContainer width={"45%"} height={50}>
             <AreaChart
+              margin={{ top: 0, right: 0, left: 15, bottom: 0 }}
               className="lineChart"
-              width={85}
-              height={55}
+              width={50}
+              height={50}
               data={reverseDatax}
             >
+              <defs>
+                <linearGradient id="cardGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#6ae97b" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#087c0e" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
               <Area
                 type="monotone"
                 dataKey="price"
-                stroke="#55c7e4"
-                fill="#1da3d8"
+                strokeWidth="2"
+                stroke="#54b054"
+                fill="url(#cardGradient)"
               />
             </AreaChart>
           </ResponsiveContainer>

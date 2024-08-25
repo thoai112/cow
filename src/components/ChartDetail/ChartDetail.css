@@ -233,6 +233,25 @@
   .currency__name, .percentage__change {
     font-size: 0.7rem;
   }
+
+  .recharts-label, .recharts-cartesian-axis-ticks text {
+    font-size: 0.6rem;
+    font-weight: 300;
+
+  }
+
+  .recharts-tooltip-wrapper .custom-tooltip {
+    min-width: 170px;
+    padding: 0.6rem;
+  }
+
+  .recharts-tooltip-wrapper .custom-tooltip .label span , .recharts-tooltip-wrapper .custom-tooltip .intro{
+    
+    font-weight: 400;
+    font-size: 0.8rem;
+  }
+  
+
 }
 
 

@@ -19,14 +19,13 @@ import { AiOutlineExpand } from "react-icons/ai";
 import { convertTime, convertDate } from "../../utils/logicHandle";
 import moment from "moment/moment";
 import "./ChartDetail.css";
-// import { set } from "react-datepicker/dist/date_utils";
 
 function ChartDetail({ coinDetail }) {
   const [timePeriod, setTimePeriod] = useState(0);
   // const [selectedData, setSelectedData] = useState(null);
 
-  const listPeriod = ["12h", "1D", "1W", "1M", "1Y", "5Y"];
-  const listPeriodConvert = ["24h", "7d", "30d", "3m", "1y", "3y"];
+  const listPeriod = ["12h", "1D", "1W", "1M", "1Y", "5Y", "All"];
+  const listPeriodConvert = ["12h", "1d", "7d", "1m", "5y", "10y" ];
   const listFormat = [
     "kk:mm",
     "Do MMM",
@@ -43,11 +42,11 @@ function ChartDetail({ coinDetail }) {
     timePeriod: listPeriodConvert[timePeriod],
   });
 
-  console.log(coinHistory);
+ 
   const [settingChart, setSettingChart] = useState({
     width: 1100,
-    height: 500,
-    margin: { top: 5, right: 75, bottom: 5, left: 30 },
+    height: 450,
+    margin: { top: 5, right: 10, bottom: 5, left: 10 },
   });
   const strokeColor = coinDetail?.change < 0 ? "#721505" : "#2fbdf5";
 
@@ -59,7 +58,7 @@ function ChartDetail({ coinDetail }) {
     ) {
       setSettingChart({
         width: 1000,
-        height: 500,
+        height: 450,
         margin: { top: 5, right: 75, bottom: 5, left: 30 },
       });
     }
@@ -95,9 +94,9 @@ function ChartDetail({ coinDetail }) {
   });
 
   const reverseData = data.reverse();
-  console.log("data", coinPrice);
-  console.log("timeslare", coinTimestamp);
-  console.log("revaersa", reverseData);
+  // console.log("data", coinPrice);
+  // console.log("timeslare", coinTimestamp);
+  // console.log("revaersa", reverseData);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -156,7 +155,7 @@ function ChartDetail({ coinDetail }) {
             onClick={() => {
               setSettingChart({
                 width: 1400,
-                height: 800,
+                height: 1000,
                 margin: { top: 50, right: 150, bottom: 50, left: 150 },
               });
               openFullscreen(chartRef.current);
@@ -184,7 +183,7 @@ function ChartDetail({ coinDetail }) {
         </div>
 
         <div ref={chartRef}>
-          <ResponsiveContainer width={"99%"} height={400}>
+          <ResponsiveContainer width={"100%"} height={settingChart.height}>
             <LineChart
               width={settingChart.width}
               height={settingChart.height}
