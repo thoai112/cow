@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { API_URL } from "../utils/config";
+
+
 const socket = io(`${API_URL}`);
 
-const useFetchLiveChart = (code) => {
+const useLiveChartFetch = (from, to) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,8 +30,8 @@ const useFetchLiveChart = (code) => {
     const getData = async () => {
       try {
         setLoading(true);
-        const params = new URLSearchParams({ from: code, to:"VND" });
-        const url = `${API_URL}/api/v1/chart/livechart?${params.toString()}`;
+        const params = new URLSearchParams({ from: from, to: to });
+        const url = `${API_URL}/api/v1/currency/livechart?${params.toString()}`;
        
         const response = await fetch(url);
         if (!response.ok) {
@@ -46,7 +48,7 @@ const useFetchLiveChart = (code) => {
     };
 
     getData();
-  }, [code]);
+  }, [from, to]);
 
   return {
     data,
@@ -55,4 +57,6 @@ const useFetchLiveChart = (code) => {
   };
 };
 
-export default useFetchLiveChart;
+
+
+export default useLiveChartFetch;

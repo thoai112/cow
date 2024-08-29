@@ -12,20 +12,24 @@ import {
   Label,
   ReferenceLine,
 } from "recharts";
-import { useGetCryptoHistoryQuery } from "../../hooks/cryptoApi";
 import { openFullscreen } from "../../utils/logicHandle";
 import { priceConvert } from "../../utils/logicHandle";
 import { AiOutlineExpand } from "react-icons/ai";
-import { convertTime, convertDate } from "../../utils/logicHandle";
+import {
+  convertTime,
+  convertDate,
+  roundTimestamp,
+} from "../../utils/logicHandle";
 import moment from "moment/moment";
+import useLiveChartFetch from "../../hooks/useLiveChartFetch";
 import "./ChartDetail.css";
 
-function ChartDetail({ coinDetail }) {
+function ChartDetail({ chartDetail }) {
   const [timePeriod, setTimePeriod] = useState(0);
-  // const [selectedData, setSelectedData] = useState(null);
+  const [timeStamp, setTimeStamp] = useState(new Date().getTime());
 
-  const listPeriod = ["12h", "1D", "1W", "1M", "1Y", "5Y", "All"];
-  const listPeriodConvert = ["12h", "1d", "7d", "1m", "5y", "10y" ];
+  const listPeriod = ["12h", "1D", "1W", "1M", "1Y", "5Y", "10Y"];
+  const listPeriodConvert = ["12h", "1d", "7d", "1m", "1y", "5y", "10y"];
   const listFormat = [
     "kk:mm",
     "Do MMM",
@@ -34,21 +38,19 @@ function ChartDetail({ coinDetail }) {
     "MMM YY",
     "MMM YY",
   ];
-  // const listTickGap = [60, 60, 60, 60, 60];
 
   const chartRef = useRef(null);
-  const { data: coinHistory } = useGetCryptoHistoryQuery({
-    coinId: coinDetail?.uuid,
-    timePeriod: listPeriodConvert[timePeriod],
-  });
 
- 
+  const { data: dataHistory = [], loading } = useLiveChartFetch(
+    chartDetail?.from?.code ?? "AED",
+    chartDetail?.to?.code ?? "VND"
+  );
+
   const [settingChart, setSettingChart] = useState({
     width: 1100,
     height: 450,
     margin: { top: 5, right: 10, bottom: 5, left: 10 },
   });
-  const strokeColor = coinDetail?.change < 0 ? "#721505" : "#2fbdf5";
 
   function exitHandler() {
     if (
@@ -65,38 +67,64 @@ function ChartDetail({ coinDetail }) {
   }
 
   useEffect(() => {
+    if (timePeriod === 0) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 12, 0, 0, 0));
+    }
+    if (timePeriod === 1) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 1, 0, 0));
+    }
+    if (timePeriod === 2) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 7, 0, 0));
+    }
+    if (timePeriod === 3) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 1, 0));
+    }
+    if (timePeriod === 4) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 1));
+    }
+    if (timePeriod === 5) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 5));
+    }
+    if (timePeriod === 6) {
+      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 10));
+    }
+  }, [timePeriod, dataHistory.timestamp]);
+
+  useEffect(() => {
     document.addEventListener("fullscreenchange", exitHandler, false);
     document.addEventListener("mozfullscreenchange", exitHandler, false);
     document.addEventListener("MSFullscreenChange", exitHandler, false);
     document.addEventListener("webkitfullscreenchange", exitHandler, false);
   }, []);
 
-  const coinPrice = [];
-  const coinTimestamp = [];
+  const currencyPrice = [];
+  const currencyTimestamp = [];
 
-  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
-    coinPrice.push(coinHistory?.data?.history[i].price);
+  if (dataHistory && dataHistory.batchList) {
+    dataHistory.batchList.forEach((batch) => {
+      const { startTime, interval, rates } = batch;
+      for (let index = 1; index < rates.length; index++) {
+        const rate = rates[index];
+        currencyTimestamp.push(startTime + index * interval);
+        currencyPrice.push(rate - rates[0]);
+      }
+    });
   }
 
-  for (let i = 0; i < coinHistory?.data?.history?.length; i += 1) {
-    coinTimestamp.push(coinHistory?.data?.history[i].timestamp);
-  }
-
-  const data = coinPrice.map((coin, index) => {
+  const data = currencyPrice.map((price, index) => {
     return {
-      TimeLabel: moment(coinTimestamp[index] * 1000).format(
+      TimeLabel: moment(currencyTimestamp[index]).format(
         listFormat[timePeriod]
       ),
-      time: coinTimestamp[index],
-      price: Number(coin),
-      timeConvert: convertDate(coinTimestamp[index]),
+      time: currencyTimestamp[index],
+      price: Number(price),
+      timeConvert: convertDate(currencyTimestamp[index]),
     };
   });
 
-  const reverseData = data.reverse();
-  // console.log("data", coinPrice);
-  // console.log("timeslare", coinTimestamp);
-  // console.log("revaersa", reverseData);
+  const index = data.findIndex((item) => item.time === timeStamp);
+  const reverseData = data.slice(index, data.length);
+
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -115,14 +143,20 @@ function ChartDetail({ coinDetail }) {
     return null;
   };
 
-  const handleBrushChange = ({ startIndex, endIndex }) => {
-    const selectedData = reverseData.slice(startIndex, endIndex + 1);
-    const min = Math.min(...selectedData.map((data) => data.price));
-    const max = Math.max(...selectedData.map((data) => data.price));
-    const tailValue = selectedData[selectedData.length - 1].price;
-    const timeStart = selectedData[0].time;
-    const timeEnd = selectedData[selectedData.length - 1].time;
-  };
+  // const handleBrushChange = ({ startIndex, endIndex }) => {
+  //   const selectedData = reverseData.slice(startIndex, endIndex + 1);
+    // const min = Math.min(...selectedData.map((data) => data.price));
+    // const max = Math.max(...selectedData.map((data) => data.price));
+    // const tailValue = selectedData[selectedData.length - 1].price;
+    // const timeStart = selectedData[0].time;
+    // const timeEnd = selectedData[selectedData.length - 1].time;
+  // };
+
+  if (!chartDetail) {
+    console.log("chartDetail");
+
+    return null;
+  }
 
   return (
     <>
@@ -130,22 +164,41 @@ function ChartDetail({ coinDetail }) {
         <div className="chartHeader">
           <div className="chartHeader__currency">
             <div className="currency__container">
-              <div className="currency__name">{coinDetail?.name} to USD</div>
+              <div className="currency__name">
+                {chartDetail.from.code} to {chartDetail.to.code} Chart
+              </div>
               <span
                 className="percentage__change"
                 style={{
-                  color: coinDetail?.change < 0 ? "#721505" : "#2fbdf5",
+                  color:
+                    ((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) /
+                      reverseData[0]?.price) *
+                      100 <
+                    0
+                      ? "red"
+                      : "green",
                 }}
               >
-                {coinDetail?.change} % ({listPeriodConvert[timePeriod]})
+                {(
+                  ((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) /
+                    reverseData[0]?.price) *
+                  100
+                ).toFixed(2)}
+                %
+              </span>
+              <span style={{ color: "white", fontSize: "1.2rem" }}>
+                ({listPeriodConvert[timePeriod]})
               </span>
             </div>
             <span className="currency__conversion">
-              US Dollar to Vietnamese Dong
+              {dataHistory?.from?.name} to {dataHistory?.to?.name}
             </span>
           </div>
+
           <div className="chartHeader__price">
-            1 USD = 24,986.4 VND Aug 22, 2024, 10:29 UTC
+            1 {dataHistory?.from?.symbol} = {chartDetail.rateEnd.toFixed(3)}{" "}
+            {dataHistory?.to?.symbol}{" "}
+            {new Date(dataHistory.timestamp).toUTCString()}
           </div>
         </div>
 
@@ -189,20 +242,19 @@ function ChartDetail({ coinDetail }) {
               height={settingChart.height}
               margin={settingChart.margin}
               className="lineChart"
-              data={reverseData}
+              data={timePeriod === 6 ? data : reverseData}
             >
               <Brush
                 dataKey="TimeLabel"
                 fill="#14d2eb3b"
                 style={{ fillOpacity: 0.05 }}
-                onChange={handleBrushChange}
               >
                 <AreaChart>
                   <Area
                     type="monotone"
                     dataKey="price"
                     strokeWidth="1"
-                    stroke={strokeColor}
+                    stroke={((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) / reverseData[0]?.price * 100) < 0 ? "red" : "green"}
                     dot={<></>}
                     fill="url(#colorGradient)"
                   />
@@ -223,15 +275,20 @@ function ChartDetail({ coinDetail }) {
                     </linearGradient>
                   </defs>
                 </AreaChart>
+        
               </Brush>
-              <XAxis dataKey="TimeLabel" minTickGap={60} />
+              <XAxis dataKey="TimeLabel" minTickGap={0} />
               <YAxis
                 padding={{ top: 30, bottom: 10 }}
                 dataKey="price"
                 type="number"
                 domain={["auto", "auto"]}
               >
-                <Label fill="#fff" value="USD" position="insideTop" />
+                <Label
+                  fill="#fff"
+                  value={dataHistory?.to?.code}
+                  position="insideTop"
+                />
               </YAxis>
 
               <Tooltip content={<CustomTooltip />} />
@@ -240,16 +297,28 @@ function ChartDetail({ coinDetail }) {
                 type="monotone"
                 dataKey="price"
                 strokeWidth="2"
-                stroke={strokeColor}
+                stroke={
+                  ((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) /
+                    reverseData[0]?.price) *
+                    100 <
+                  0
+                    ? "red"
+                    : "green"
+                }
                 dot={<></>}
-                fillOpacity={1} fill="url(#colorUv)" 
+                fillOpacity={1}
+                fill="url(#colorUv)"
               />
               <ReferenceLine
-                y={reverseData[0]?.price}
+                y={timePeriod === 6 ? data[0]?.price : reverseData[0]?.price}
                 stroke="#fff"
                 strokeDasharray="2"
               >
-                <Label fill="#fff">{priceConvert(reverseData[0]?.price)}</Label>
+                <Label fill="#fff">
+                  {priceConvert(
+                    timePeriod === 6 ? data[0]?.price : reverseData[0]?.price
+                  )}
+                </Label>
               </ReferenceLine>
             </LineChart>
           </ResponsiveContainer>

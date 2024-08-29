@@ -42,11 +42,11 @@ const useCurrencyFetch = (date) => {
         let url;
         if (dateDifference === 0) {
           setIsRealTimeEnabled(true);
-          url = `${API_URL}/api/v1/chart/currency`;
+          url = `${API_URL}/api/v1/currency/currencylive`;
         } else {
           setIsRealTimeEnabled(false);
           const params = new URLSearchParams({ date: selectedDate });
-          url = `${API_URL}/api/v1/chart/currencydate?${params.toString()}`;
+          url = `${API_URL}/api/v1/currency/currencydate?${params.toString()}`;
         }
         const response = await fetch(url);
         if (!response.ok) {

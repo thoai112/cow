@@ -1,6 +1,6 @@
 export const convertTime = function (timestamp, separator) {
     var pad = function (input) { return input < 10 ? "0" + input : input; };
-    var date = timestamp ? new Date(timestamp * 1000) : new Date();
+    var date = timestamp ? new Date(timestamp) : new Date();
     return [
         pad(date.getHours()),
         pad(date.getMinutes()),
@@ -9,7 +9,7 @@ export const convertTime = function (timestamp, separator) {
 };
 
 export function convertDate(timestamp) {
-    var date = new Date(timestamp * 1000);
+    var date = new Date(timestamp);
     var formattedDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
     return formattedDate
 }
@@ -54,7 +54,31 @@ export function closeFullscreen() {
     }
 }
 
-
+export function roundTimestamp(targetTimestamp,hour, day, mon, year) {
+    const date = new Date(targetTimestamp);
+    const minutes = date.getMinutes();
+    const diff = minutes % 10;
+    const roundedMinutes = minutes + (diff >= 0 ? 10 - diff : -diff);
+    date.setDate(date.getDate() - day);
+    date.setHours(date.getHours() - hour);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    if (day < 2){
+        date.setMinutes(roundedMinutes);
+    }
+    if (day===7 || mon===1){
+        date.setMinutes(0);
+        date.setHours(date.getHours() + 1);
+        console.log(date);
+    }
+    date.setMonth(date.getMonth() - mon);
+    date.setFullYear(date.getFullYear() - year);
+    if (year > 0){
+        date.setHours(0);
+        date.setMinutes(0);
+    }
+    return date.getTime();
+  }
 
 // export fucntion covertDate(timestamp){
 //     var date = new Date(timestamp * 1000);

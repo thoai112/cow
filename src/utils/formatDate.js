@@ -13,4 +13,19 @@ const formatNumber = (number) => {
   }).format(number);
 };
 
-export { formatDate, formatNumber };
+function roundTimestamp(targetTimestamp, day, mon, year) {
+  const date = new Date(targetTimestamp);
+  const minutes = date.getMinutes();
+  const diff = minutes % 10;
+  const roundedMinutes = minutes + (diff >= 1 ? 10 - diff : -diff);
+  date.setMinutes(roundedMinutes);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+
+  date.setDate(date.getDate() - day);
+  date.setMonth(date.getMonth() - mon);
+  date.setFullYear(date.getFullYear() - year);
+  return date.getTime();
+}
+
+export { formatDate, formatNumber,roundTimestamp };

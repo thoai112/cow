@@ -24,19 +24,6 @@ const Cow = ({ averagePriceVND }) => {
           ) / 158 <br></br>
           <span className="">{averagePriceVND} VND = 1 COW </span>
         </p>
-        <p>Where:</p>
-        <ul>
-          <li>
-            V<sub>i</sub> is the value of the i-th currency converted to VND.
-          </li>
-          <li>152 is the total number of currencies.</li>
-        </ul>
-        <p>
-          With the linkage from countries and finance, we believe COW will be
-          the most stable and inflation-proof currency in the world. To destroy
-          COW, one would have to collapse the finances of all the world's
-          currencies.
-        </p>
       </div>
     </div>
   );

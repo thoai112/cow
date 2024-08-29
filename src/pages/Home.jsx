@@ -36,11 +36,18 @@ const Home = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currencySection = document.querySelector(".currency");
+      const popup = document.querySelector(".notify__content");
       if (currencySection) {
         const rect = currencySection.getBoundingClientRect();
         // const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
         const isVisible = rect.bottom <= window.innerHeight;
         setIsCowVisible(isVisible);
+      }
+
+      if (popup) {
+        const rect = currencySection.getBoundingClientRect();
+        const isVisible = rect.bottom <= window.innerHeight;
+        setIsPopupVisible(isVisible);
       }
     };
 
@@ -129,9 +136,6 @@ const Home = () => {
               <p>{t("notify_cow.line1")}</p>
               <p>{t("notify_cow.line2")}</p>
               <p>{t("notify_cow.line3")}</p>
-              <p>{t("notify_cow.line4")}</p>
-              <p>{t("notify_cow.line5")}</p>
-              <p>{t("notify_cow.line6")}</p>
             </div>
           </Row>
         </Container>
