@@ -67,8 +67,8 @@
 }
 @media only screen and (max-width: 992px) {
   .cardDetail__currency {
-    font-size: 0.7rem;
-    font-weight: 500;
+    font-size: 0.5rem;
+    font-weight: 400;
   }
 
 

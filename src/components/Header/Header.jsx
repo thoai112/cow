@@ -9,7 +9,7 @@ import "flag-icons/css/flag-icons.min.css";
 
 const languages = [
   { code: "en", lang: "EN", flag: "us" },
-  { code: "vi", lang: "VN", flag: "vn" },
+  { code: "vi_VN", lang: "VN", flag: "vn" },
 ];
 
 // nav links

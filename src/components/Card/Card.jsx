@@ -52,7 +52,12 @@ const Card = ({ region, onClick }) => {
               {region.from.code}/{region.to.code}
             </div>
             {isVisible && (
-              <svg width="40%" height="50" style={{ marginLeft: '5%', marginTop: '2%' }}>
+              <svg
+              width="40%"
+              height="100%"
+              viewBox="0 0 100 40"
+              style={{ marginLeft: '5%', marginTop: '2%' }}
+            >
                 <Sparklines
                   data={currencyPrice.slice(
                     currencyPrice.length - 150,
@@ -76,7 +81,7 @@ const Card = ({ region, onClick }) => {
                       const sign = region.change > 0 ? "+" : "";
                       return (
                         <span style={{ color }}>
-                          {sign} {region.change.toFixed(3)} %
+                          {sign} {region.change.toFixed(2)} %
                         </span>
                       );
                     })()
