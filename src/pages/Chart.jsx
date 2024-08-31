@@ -88,25 +88,42 @@ const Chart = () => {
     <>
       <div className="chart">
         <TickerTape colorTheme="dark" isTransparent="true"></TickerTape>
-        <div
-            className="nav__sideBar"
-            ref={sideBarRef}
-            onClick={toggleSideBar}
-          >
-            {isShowCard ? (
-              <p>Loading...</p>
-            ) : (
-              cardData.map((region, index) => (
-                <Card
-                  key={index}
-                  region={region}
-                  onClick={() => handleCardClick(region)}
-                />
-              ))
-            )}
-          </div>
+        <div className="nav__sideBar" ref={sideBarRef} onClick={toggleSideBar}>
+          {isShowCard ? (
+            <p>Loading...</p>
+          ) : (
+            cardData.map((region, index) => (
+              <Card
+                key={index}
+                region={region}
+                onClick={() => handleCardClick(region)}
+              />
+            ))
+          )}
+        </div>
         <div className="main-content">
           <aside id="left__sidebar">
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="FX:EURUSD"
+            ></MiniChart>
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="BTCUSD"
+            ></MiniChart>
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="ETHUSD"
+            ></MiniChart>
             {isShowCard ? (
               <p>Loading...</p>
             ) : (

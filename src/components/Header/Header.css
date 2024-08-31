@@ -185,7 +185,7 @@
     width: calc(100% -50%);
   }
 
-  .information, .language__selector{
+  .information {
     display: none;
   }
 
@@ -198,13 +198,13 @@
   .logo-text {
     font-size: 0.5rem;
   }
-  .language-dropdown {
+  /* .language-dropdown {
     padding: 3px;
     font-size: 0.7rem;
   }
   .information, .language__selector{
     display: none;
-  }
+  } */
 
 
 }
