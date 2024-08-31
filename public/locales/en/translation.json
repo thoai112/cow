@@ -4,26 +4,40 @@
   "login": "Login",
   "register": "Register",
   "description_cow": {
-    "line1": "Cow (Coin Of World) is created by the simplest algorithm, which is the Average.",
-    "line2": "We have listed all the currencies from countries and territories that are in circulation around the world and are internationally recognized (ISO 4217).",
-    "line3": "According to our statistics, there are 152 currencies in circulation, all of which are converted to Vietnamese Dong (VND). We add up the value of all currencies in VND and divide it equally to find the average value = 1 COW.",
-    "line4": "With the connection from countries and finance. I believe COW will be the most stable and non-inflationary currency in the world. To destroy COW, you must collapse the finances of all national currencies."
-
-  
+    "title": "What is COW?",
+    "line1": "The Cow (Coin of the World) is created using the simplest algorithm: the Arithmetic Mean.",
+    "line2": "We have listed all the currencies from countries and territories that are currently in circulation worldwide and recognized internationally, according to the ISO 4217 standard.",
+    "line3": "According to our statistics, there are 158 currencies currently in circulation, all of which have been converted into Vietnamese Dong (VND). We sum the values of all the currencies based on their VND equivalent and divide it equally to find the average value, which equals 1 COW.",
+    "line4": "With the integration of these global currencies, I believe that COW will be the most inflation-resistant and stable currency in the world. To destroy COW, one would have to collapse the financial systems of all nations.",
+    "line5": "We focus on and develop stability, balance, and security to combat the inflation of traditional currencies.",
+    "line6": "If you find that COW is a potential, reliable, and safe project for your assets, please follow us by signing up and leaving your email to receive updates on the development and legal information of COW.",
+    "line7": "We would also greatly appreciate your referrals of us to investors and collaborators.",
+    "line8": "Contact us via email at:",
+    "line9": "cow.coinofworld.vn@gmail.com"
   },
 
-
   "notify_cow": {
-    "line1": "Contact us via gmail",
+    "line1": "Contact us via email",
     "line2": "cow.coinofworld.vn@gmail.com",
     "line3": "Thank you!!!"
   },
   "popup": {
-    "title": "NOTE",
-    "line1": "We are not officially operating and recognized by law yet.",
-    "line2": "The project is only viewed and referenced to receive comments to avoid scammers impersonating COW to call for community capital from investors sending links with malicious code to steal your assets.",
-    "line3": "All official information will only be officially announced at: ",
-    "line4": "Www.coin…….com",
-    "line5":"I agree to the terms and conditions."
+    "title": "**NOTICE**",
+    "line1": "Currently, we are not officially operating and have not been recognized by the law. ",
+    "line2": "The project is only for viewing and consultation to receive feedback and suggestions.To prevent scammers from impersonating COW to solicit crowdfunding from investors or sending malicious links to steal your assets, please be cautious.",
+    "line3": "All official information will only be announced through the official channel at:",
+    "line4": "www.coinofworld.com",
+    "line5": "I agree to the terms and conditions."
+  },
+  "table": {
+    "title": "List Of Currencies",
+    "first_page": "First page",
+    "last_page": "Last page",
+    "next_page": "Next",
+    "previous_page": "Previous"
+  },
+  "cowcard": {
+    "title": "How it works.",
+    "formula": "The formula to calculate the value of 1 COW is: "
   }
 }
