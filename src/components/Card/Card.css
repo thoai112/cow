@@ -79,6 +79,9 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .cardDetail {
+   display: none  !important;
+  }
   .cardDetail__currency {
     font-size: 0.6rem;
     font-weight: 400;
@@ -87,4 +90,6 @@
   .cardDetail__column--price, .cardDetail__column--valuechange {
     font-size: 0.6rem;
   }
+
+
 }

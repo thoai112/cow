@@ -28,6 +28,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   color: var(--secondary-color);
+  text-align: center;
   display: flex;
   margin-top: 10px;
 }

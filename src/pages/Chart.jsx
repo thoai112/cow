@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StickySidebar from "sticky-sidebar";
 import "../style/chart.css";
 import ChartDetail from "../components/ChartDetail/ChartDetail";
@@ -20,6 +20,7 @@ import {
   ForexHeatMap,
   MiniChart,
   Screener,
+  StockHeatmap,
 } from "react-ts-tradingview-widgets";
 
 const Chart = () => {
@@ -27,6 +28,7 @@ const Chart = () => {
   const [cardData, setCardData] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedOption, setSelectedOption] = useState("crypto");
+  const sideBarRef = useRef(null);
 
   const mergeData = (regionData, last24hData) => {
     const last24hMap = last24hData.reduce((acc, item) => {
@@ -76,10 +78,33 @@ const Chart = () => {
     setSelected(data);
   };
 
+  const toggleSideBar = () => {
+    if (sideBarRef.current) {
+      sideBarRef.current.classList.toggle("show__sidebar");
+    }
+  };
+
   return (
     <>
       <div className="chart">
         <TickerTape colorTheme="dark" isTransparent="true"></TickerTape>
+        <div
+            className="nav__sideBar"
+            ref={sideBarRef}
+            onClick={toggleSideBar}
+          >
+            {isShowCard ? (
+              <p>Loading...</p>
+            ) : (
+              cardData.map((region, index) => (
+                <Card
+                  key={index}
+                  region={region}
+                  onClick={() => handleCardClick(region)}
+                />
+              ))
+            )}
+          </div>
         <div className="main-content">
           <aside id="left__sidebar">
             {isShowCard ? (
@@ -183,6 +208,18 @@ const Chart = () => {
                 isTransparent="true"
               ></Timeline>
             )}
+            <StockHeatmap
+              colorTheme="dark"
+              height={400}
+              width="100%"
+              isTransparent="true"
+            ></StockHeatmap>
+            <Timeline
+              colorTheme="dark"
+              height={400}
+              width="100%"
+              isTransparent="true"
+            ></Timeline>
           </div>
           <div className="right__sidebar">
             <Converter />

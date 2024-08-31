@@ -46,7 +46,7 @@ const Home = () => {
       if (popup) {
         const rect = currencySection.getBoundingClientRect();
         const isVisible = rect.bottom <= window.innerHeight;
-        // setIsPopupVisible(isVisible);
+        setIsPopupVisible(isVisible);
       }
     };
 

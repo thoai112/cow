@@ -156,12 +156,6 @@ function ChartDetail({ chartDetail }) {
     // const timeEnd = selectedData[selectedData.length - 1].time;
   // };
 
-  if (!chartDetail) {
-    console.log("chartDetail");
-
-    return null;
-  }
-
   return (
     <>
       <div className="chartDetailWrapper">

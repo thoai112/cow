@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { Container, Row, Button } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./Header.css";
 import { AuthContext } from "./../../context/AuthContext";
 import logo from "../../assets/images/logocow.png";
@@ -19,12 +19,8 @@ const languages = [
 //     display: "Home",
 //   },
 //   {
-//     path: "/about",
-//     display: "About",
-//   },
-//   {
-//     path: "/tours",
-//     display: "Tours",
+//     path: "/market",
+//     display: "Market",
 //   },
 // ];
 
@@ -80,16 +76,7 @@ const Header = () => {
   };
 
   const { t } = useTranslation();
-  // const { login, register } = t("description", { channel: "RoadsideCoder" });
-  // useEffect(() => {
-  //   socket.on('message', () => {
-  //     console.log('Connected to the server');
-  //   });
 
-  //   return () => {
-  //     socket.off('connect');
-  //   };
-  // }, []);
 
   return (
     <header className="header" ref={headerRef}>
@@ -109,9 +96,9 @@ const Header = () => {
 
             {/* <!-- ========== Start Menu Section ========== --> */}
 
-            {/* <div className="navigation" ref={menuRef} onClick={toggleMenu}>
-               <ul className="menu d-flex align-items-center gap-5">
-              {
+            <div className="navigation" ref={menuRef} onClick={toggleMenu}>
+               <ul className="navbar">
+              {/* {
                 nav__links.map((item, index) => {
                   return (
                   <li className="nav__item" key={index}>
@@ -121,9 +108,9 @@ const Header = () => {
                   </li>
                   )
                 })
-              }
+              } */}
             </ul> 
-            </div> */}
+            </div>
 
             {/* <!-- ========== End Menu Section ========== --> */}
 
