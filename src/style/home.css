@@ -269,8 +269,8 @@
 }
 
 .popup-content {
-  width: 30%;
-  height: 35%;
+  width: 530px;
+  height: 340px;
   background: #081b2960;
   border: 2px solid #00abf0;
   padding: 20px 10px;
@@ -280,7 +280,7 @@
 }
 
 .popup-content h1 {
-  color: #fff;
+  color: #cc0000;
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
@@ -302,7 +302,10 @@
 }
 
 /*CHECKBOX STYLE */
+.checkboxes__item{
+  margin-top: 3px;
 
+}
 .checkbox.style-cb {
   display: inline-block;
   position: relative;
@@ -336,8 +339,8 @@
   position: absolute;
   top: 2px;
   left: 0;
-  height: 20px;
-  width: 20px;
+  height: 17px;
+  width: 17px;
   background-color: #eee;
   transition: background-color 0.25s ease;
   border-radius: 4px;
@@ -361,10 +364,12 @@
   font-size: 1rem;
 }
 
+
 /* Animate */
 .bounce-out-down {
   animation: bounce-out-down 2s ease infinite;
 }
+
 
 @keyframes bounce-out-down {
   0% {
@@ -428,9 +433,14 @@
 
   .popup-container {
     overflow-y: auto;
-    max-height: 20vh;
+    scrollbar-width: none;
+    height: 22vh;
   }
 
+  .popup-content {
+    width: 430px;
+    height: 290px;
+  }
   .popup-content h1 {
     font-size: 1rem;
     font-weight: 450;
@@ -444,8 +454,13 @@
 
   .checkbox.style-cb .checkbox__body {
     color: #fff;
-    line-height: 1.1;
+    line-height: 1;
     font-size: 0.8rem;
+  }
+
+  .checkbox__checkmark {
+    width: 9px; 
+    height: 9px; 
   }
 
 }
@@ -461,7 +476,12 @@
   }
   .popup-container {
     overflow-y: auto;
-    max-height: 30vh;
+    max-height: 12vh;
+  }
+
+  .popup-content {
+    width: 70%;
+    height: 23%;
   }
 
   .popup-content h1 {
@@ -473,6 +493,15 @@
     font-size: 0.5rem;
     font-weight: 400;
     line-height: 0.9rem;
+  }
+
+  .checkbox.style-cb .checkbox__body {
+    font-size: 0.6rem;
+  }
+
+  .checkbox.style-cb .checkbox__checkmark {
+    height: 10px;
+    width: 10px;
   }
 
 }

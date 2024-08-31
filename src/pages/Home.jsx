@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"; 
-import { useNavigate } from "react-router-dom"; 
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/home.css";
 import { Container, Row, Col } from "reactstrap";
 import logo from "../assets/images/logocow.png";
@@ -39,7 +39,6 @@ const Home = () => {
       const popup = document.querySelector(".notify__content");
       if (currencySection) {
         const rect = currencySection.getBoundingClientRect();
-        // const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
         const isVisible = rect.bottom <= window.innerHeight;
         setIsCowVisible(isVisible);
       }
@@ -47,7 +46,7 @@ const Home = () => {
       if (popup) {
         const rect = currencySection.getBoundingClientRect();
         const isVisible = rect.bottom <= window.innerHeight;
-        setIsPopupVisible(isVisible);
+        // setIsPopupVisible(isVisible);
       }
     };
 
@@ -80,11 +79,20 @@ const Home = () => {
           <Row>
             <Col lg="6">
               <div className="description__content">
-                <h1>WHAT IS COW?</h1>
+                <h1>{t("description_cow.title")}</h1>
                 <p>{t("description_cow.line1")}</p>
                 <p>{t("description_cow.line2")}</p>
                 <p>{t("description_cow.line3")}</p>
                 <p>{t("description_cow.line4")}</p>
+                <p>{t("description_cow.line5")}</p>
+                <p>{t("description_cow.line6")}</p>
+                <p>{t("description_cow.line7")}</p>
+                <p>{t("description_cow.line8")}</p>
+                <p>
+                  <a href={`mailto:${t("description_cow.line9")}`}>
+                    {t("description_cow.line9")}
+                  </a>
+                </p>
               </div>
             </Col>
             <Col lg="6">
@@ -134,7 +142,11 @@ const Home = () => {
             </div>
             <div className="notify__content">
               <p>{t("notify_cow.line1")}</p>
-              <p>{t("notify_cow.line2")}</p>
+              <p>
+                <a href={`mailto:${t("notify_cow.line2")}`}>
+                  {t("notify_cow.line2")}
+                </a>
+              </p>
               <p>{t("notify_cow.line3")}</p>
             </div>
           </Row>
@@ -150,11 +162,19 @@ const Home = () => {
                 <p>{t("popup.line1")}</p>
                 <p>{t("popup.line2")}</p>
                 <p>{t("popup.line3")}</p>
-                <p>{t("popup.line4")}</p>
+                <p>
+                  <a href="https://cowdev.coinofworld.com">
+                    {t("popup.line4")}
+                  </a>
+                </p>
               </div>
               <div class="checkboxes__item">
                 <label class="checkbox style-cb">
-                  <input type="checkbox" onChange={handleCheckboxChange} />
+                  <input
+                    type="checkbox"
+                    class="styled-checkbox"
+                    onChange={handleCheckboxChange}
+                  />
                   <div class="checkbox__checkmark"></div>
                   <div class="checkbox__body">{t("popup.line5")}</div>
                 </label>

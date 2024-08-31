@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 55% 10px 10px;
+  margin-left: 10px;
   border-radius: 5px;
   background-color: var(--third-color);
 }
@@ -29,4 +29,34 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+}
+
+@media only screen and (max-width: 992px) {
+  .calendar {
+    width: 80px;
+    margin-left: 10px;
+  }
+  .react-datepicker__input-container input {
+    width: 130%;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .calendar {
+    width: 60px;
+    margin-left: 5px;
+  }
+
+  .react-datepicker__input-container input {
+    width: 130%;
+    font-size: 0.7rem;
+  }
+
+  .react-datepicker {
+    width: 100%;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;    
+  }
 }

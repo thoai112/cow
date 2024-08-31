@@ -11,8 +11,10 @@ import {
 import useCurrencyFetch from "../hooks/useCurrencyFetch";
 import Calendar from "./Calendar";
 import { formatDate } from "../utils/formatDate";
+import { useTranslation } from "react-i18next";
 
 const Table = ({ onAveragePriceChange }) => {
+  const { t } = useTranslation();
   const [sorting, setSorting] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -33,10 +35,7 @@ const Table = ({ onAveragePriceChange }) => {
     value: true,
   });
 
-  const {
-    data: mData,
-    loading,
-  } = useCurrencyFetch(formatDate(selectedDate));
+  const { data: mData, loading } = useCurrencyFetch(formatDate(selectedDate));
 
   const cowValue =
     mData.cowvalue !== null ? parseFloat(mData.cowvalue).toFixed(2) : null;
@@ -118,12 +117,12 @@ const Table = ({ onAveragePriceChange }) => {
 
   return (
     <div className="data__table">
-      <h1> List Of Currency</h1>
+      <h1> {t("table.title")}</h1>
       <div className="cow__value">
         <div className="col-6">
           <Calendar onDateChange={setSelectedDate} />
         </div>
-        <div className="col-3">
+        <div className="col-5 row__price">
           <div className="search-bar">
             <input
               type="text"
@@ -131,11 +130,10 @@ const Table = ({ onAveragePriceChange }) => {
               onChange={handleSearchChange}
               placeholder="Search..."
             />
+            <div className="cow__price">1 COW = {cowValue} VND</div>
           </div>
         </div>
-        <div className="col-3">
-          <h2>1 COW = {cowValue} VND</h2>
-        </div>
+        
       </div>
       <table>
         <thead className="thead-dark">
@@ -209,7 +207,7 @@ const Table = ({ onAveragePriceChange }) => {
             table.setPageIndex(0);
           }}
         >
-          First Page
+          {t("table.first_page")}
         </button>
         <button
           className="pagination-button"
@@ -218,7 +216,7 @@ const Table = ({ onAveragePriceChange }) => {
             table.previousPage();
           }}
         >
-          Previous
+           {t("table.previous_page")}
         </button>
         <button
           className="pagination-button"
@@ -227,7 +225,7 @@ const Table = ({ onAveragePriceChange }) => {
             table.nextPage();
           }}
         >
-          Next
+          {t("table.next_page")}
         </button>
         <button
           className="pagination-button"
@@ -235,35 +233,9 @@ const Table = ({ onAveragePriceChange }) => {
             table.setPageIndex(table.getPageCount() - 1);
           }}
         >
-          Last Page
+          {t("table.last_page")}
         </button>
       </div>
-      {/* <div className="pagination">
-        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          Previous
-        </button>
-        <span>
-          Page{' '}
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-          </strong>
-        </span>
-        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          Next
-        </button>
-        <select
-          value={table.getState().pagination.pageSize}
-          onChange={e => {
-            table.setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div> */}
     </div>
   );
 };
