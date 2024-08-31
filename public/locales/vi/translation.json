@@ -7,15 +7,12 @@
     "line1": "Cow (Coin Of World) được tạo ra bởi 1 thuật toán đơn giản nhất đó là Trung bình cộng.",
     "line2": "Chúng tôi đã liệt kê tất cả các đồng tiền tệ từ các quốc gia và vùng lãnh thổ đang được lưu hành trên toàn thế giới và được công nhận bởi quốc tế (ISO 4217).",
     "line3": "Theo thống kê của chúng tôi bao gồm 152 đòng tiền đang được lưu hành, tất cả đều được quy đổi giá trị ra tiền Việt Nam Đồng (VND). Chúng tôi cộng giá trị tất cả các loại tiền tệ theo giá trị VND và chia đều để tìm ra giá trị trung bình = 1 COW.",
-    "line4": "Với sự liên kết từ các quốc gia và tài chính. Tôi tin tưởng COW sẽ là đồng tiền không bị lạm phát và ổn định nhất thế giới. Để huỷ hoại COW, các bạn phải làm sụp đổ tài chính của tiền tệ tất cả các quốc gia."
+    "line4": "Với sự liên kết từ các quốc gia và tài chính. Tôi tin tưởng COW sẽ là đồng tiền không bị lạm phát và ổn định nhất thế giới. Để huỷ hoại COW, các bạn phải làm sụp đổ tài chính của tiền tệ tất cả các quốc gia."  
   },
   "notify_cow":{
-    "line1":"Chúng tôi tập trung và phát triển về sự ổn định. Cân bằng, an toàn chống lại sự lạm phát của tiền tệ truyền thống.",
-    "line2":"Nếu bạn cảm thấy COW là dự án tiềm năng, tốt và an toàn cho tài sản của bạn, hãy theo dõi bằng cách đăng ký và để lại gmail để nhận được những thông tin phát triển cũng như pháp lý của COW",
-    "line3":"Chúng tôi cũng rất cần sự giới thiệu của bạn về chúng tôi đến các nhà đầu tư và hợp tác.",
-    "line4":"Liên hệ với chúng tôi qua gmail",
-    "line5":"cow.coinofworld.vn@gmail.com",
-    "line6":"Cảm ơn!!!"
+    "line1":"Liên hệ với chúng tôi qua gmail",
+    "line2":"cow.coinofworld.vn@gmail.com",
+    "line3":"Cảm ơn!!!"
   },
   "popup":{
     "title":"LƯU Ý",
