@@ -42,13 +42,17 @@ function ChartDetail({ chartDetail }) {
   const chartRef = useRef(null);
 
   const { data: dataHistory = [], loading } = useLiveChartFetch(
-    chartDetail?.from?.code ?? "AED",
-    chartDetail?.to?.code ?? "VND"
+    chartDetail?.from?.code,
+    chartDetail?.to?.code,
   );
 
+  if (loading) {
+    console.log("loading");
+  }
+
   const [settingChart, setSettingChart] = useState({
-    width: 1100,
-    height: 450,
+    width: 1000,
+    height: 350,
     margin: { top: 5, right: 10, bottom: 5, left: 10 },
   });
 
@@ -60,7 +64,7 @@ function ChartDetail({ chartDetail }) {
     ) {
       setSettingChart({
         width: 1000,
-        height: 450,
+        height: 350,
         margin: { top: 5, right: 75, bottom: 5, left: 30 },
       });
     }

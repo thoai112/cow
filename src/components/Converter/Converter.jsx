@@ -19,7 +19,6 @@ function Converter() {
       setSelectedCurrencyFrom(Object.keys(liveConverter.rates[0])[0]);
       setSelectedCurrencyTo(Object.keys(liveConverter.rates[0])[147]);
 
-
     }
   }, [liveConverter, converterLoading]);
   

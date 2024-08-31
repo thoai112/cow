@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Accordion } from "react-bootstrap";
+import { Carousel} from "react-bootstrap";
 import "./Trending.css";
 
 const Trending = () => {

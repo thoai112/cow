@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react"; // Added missing imports
-import { useNavigate } from "react-router-dom"; // Added missing imports
+import { useState, useEffect } from "react"; 
+import { useNavigate } from "react-router-dom"; 
 import "../style/home.css";
 import { Container, Row, Col } from "reactstrap";
 import logo from "../assets/images/logocow.png";
 import Cow from "../shared/Cow";
 import Table from "../shared/Table";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 //home component
 const Home = () => {

@@ -1,23 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import "./Card.css";
 import { Sparklines, SparklinesLine } from "react-sparklines";
-import { convertTime, convertDate } from "../../utils/logicHandle";
-import moment from "moment/moment";
 
 import useLazyLoad from "../../hooks/useLazyLoad";
 
 const Card = ({ region, onClick }) => {
   const [isVisible, ref] = useLazyLoad();
-  const chartRef = useRef(null);
-
-  const listFormat = [
-    "kk:mm",
-    "Do MMM",
-    "Do MMM",
-    "Do MMM",
-    "MMM YY",
-    "MMM YY",
-  ];
 
   const currencyTimestamp = [];
   const currencyPrice = [];
@@ -32,15 +20,6 @@ const Card = ({ region, onClick }) => {
       }
     });
   }
-
-  const data = currencyPrice.map((price, index) => {
-    return {
-      TimeLabel: moment(currencyTimestamp[index]).format(listFormat["1d"]),
-      time: currencyTimestamp[index],
-      price: Number(price),
-      timeConvert: convertDate(currencyTimestamp[index]),
-    };
-  });
 
 
   return (

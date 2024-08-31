@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, memo } from "react";
+import React, { useState, useEffect } from "react";
 import StickySidebar from "sticky-sidebar";
 import "../style/chart.css";
 import ChartDetail from "../components/ChartDetail/ChartDetail";
 import Converter from "../components/Converter/Converter";
 import Card from "../components/Card/Card";
-import LastNew from "../components/LastNew/LastNew";
-import Trending from "../components/Trending/Trending";
+
 import useRegionFetch from "../hooks/useRegionFetch";
 import useLast24hFetch from "../hooks/useLast24hFetch";
 
@@ -20,13 +19,14 @@ import {
   ForexCrossRates,
   ForexHeatMap,
   MiniChart,
+  Screener,
 } from "react-ts-tradingview-widgets";
 
 const Chart = () => {
-  const [isNews, setIsNews] = useState(true);
   const [isShowCard, setIsShowCard] = useState(true);
   const [cardData, setCardData] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("crypto");
 
   const mergeData = (regionData, last24hData) => {
     const last24hMap = last24hData.reduce((acc, item) => {
@@ -43,6 +43,7 @@ const Chart = () => {
       };
     });
   };
+
   useEffect(() => {
     const rightSidebarElement = document.querySelector(".right-sidebar");
     const mainContentElement = document.querySelector(".main-content");
@@ -59,18 +60,17 @@ const Chart = () => {
     }
   }, []);
 
-  // const { region: regionData = [], loading: regionLoading } = useRegionFetch();
+  const { region: regionData = [], loading: regionLoading } = useRegionFetch();
 
-  // const { data: last24hData = [], loading: last24hLoading } = useLast24hFetch();
+  const { data: last24hData = [], loading: last24hLoading } = useLast24hFetch();
 
-  // useEffect(() => {
-  //   if (!regionLoading && !last24hLoading) {
-  //     const mergedData = mergeData(regionData.data, last24hData.data);
-  //     setCardData(mergedData);
-  //     setIsShowCard(false);
-  //     setSelected(mergedData[0] || null);
-  //   }
-  // }, [regionLoading, last24hLoading, regionData, last24hData]);
+  useEffect(() => {
+    if (!regionLoading && !last24hLoading) {
+      const mergedData = mergeData(regionData.data, last24hData.data);
+      setCardData(mergedData);
+      setIsShowCard(false);
+    }
+  }, [regionLoading, last24hLoading, regionData, last24hData]);
 
   const handleCardClick = (data) => {
     setSelected(data);
@@ -82,7 +82,7 @@ const Chart = () => {
         <TickerTape colorTheme="dark" isTransparent="true"></TickerTape>
         <div className="main-content">
           <aside id="left__sidebar">
-            {/* {isShowCard ? (
+            {isShowCard ? (
               <p>Loading...</p>
             ) : (
               cardData.map((region, index) => (
@@ -92,12 +92,12 @@ const Chart = () => {
                   onClick={() => handleCardClick(region)}
                 />
               ))
-            )} */}
+            )}
           </aside>
           <div className="chart__center">
             <div className="chartWrapper">
               <div className="responsiveChartContainer">
-                {/* {isShowCard ? ( */}
+                {selected === null ? (
                   <AdvancedRealTimeChart
                     className="responsiveChart"
                     theme="dark"
@@ -106,41 +106,83 @@ const Chart = () => {
                     hide_side_toolbar="true"
                     autosize
                   />
-                {/* ) : (
+                ) : (
                   <ChartDetail chartDetail={selected} />
-                )} */}
+                )}
               </div>
             </div>
+
             <div className="mainNavigate">
               <div
-                className={!isNews ? `btnNavigate active` : `btnNavigate`}
-                onClick={() => setIsNews(false)}
+                className={
+                  selectedOption === "crypto"
+                    ? `btnNavigate active`
+                    : `btnNavigate`
+                }
+                onClick={() => setSelectedOption("crypto")}
               >
-                Cryptocurrency Market
+                Cryptocurrency
               </div>
               <div
-                className={isNews ? `btnNavigate active` : `btnNavigate`}
-                onClick={() => setIsNews(true)}
+                className={
+                  selectedOption === "forex"
+                    ? `btnNavigate active`
+                    : `btnNavigate`
+                }
+                onClick={() => setSelectedOption("forex")}
               >
                 Forex
               </div>
+              <div
+                className={
+                  selectedOption === "screener"
+                    ? `btnNavigate active`
+                    : `btnNavigate`
+                }
+                onClick={() => setSelectedOption("screener")}
+              >
+                Screener
+              </div>
+              <div
+                className={
+                  selectedOption === "news"
+                    ? `btnNavigate active`
+                    : `btnNavigate`
+                }
+                onClick={() => setSelectedOption("news")}
+              >
+                News
+              </div>
             </div>
-            {isNews ? (
+            {selectedOption === "forex" ? (
               <ForexHeatMap
                 colorTheme="dark"
                 width="100%"
                 height={200}
                 isTransparent="True"
               />
-            ) : (
+            ) : selectedOption === "crypto" ? (
               <CryptoCurrencyMarket
                 colorTheme="dark"
                 width="100%"
                 height={300}
                 isTransparent="true"
               />
+            ) : selectedOption === "screener" ? (
+              <Screener
+                colorTheme="dark"
+                width="100%"
+                height={300}
+                isTransparent="true"
+              />
+            ) : (
+              <Timeline
+                colorTheme="dark"
+                height={400}
+                width="100%"
+                isTransparent="true"
+              ></Timeline>
             )}
-            <Timeline height={400} width="100%" isTransparent="true"></Timeline>
           </div>
           <div className="right__sidebar">
             <Converter />
@@ -151,40 +193,27 @@ const Chart = () => {
               width="100%"
               isTransparent="true"
             ></StockMarket>
-          <MiniChart colorTheme="dark" width="100%" height="9%" isTransparent="true" symbol="FX:EURUSD"></MiniChart>
-          <MiniChart colorTheme="dark" width="100%" height="9%" isTransparent="true" symbol="BTC"></MiniChart>
-          <MiniChart colorTheme="dark" width="100%" height="9%" isTransparent="true" symbol="ETH"></MiniChart>
-
-            {/* <Trending />
-          <div className="tableTrend">
-            <div className="mainNavigate">
-              <div
-                className={!isNews ? `btnNavigate active` : `btnNavigate`}
-                onClick={() => {
-                  setIsNews(false);
-                }}
-              >
-                Overview
-              </div>
-              <div
-                className={isNews ? `btnNavigate active` : `btnNavigate`}
-                onClick={() => {
-                  setIsNews(true);
-                }}
-              >
-                News
-              </div>
-            </div>
-            {isNews ? (
-              <div className="news-container">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <LastNew key={index} />
-                ))}
-              </div>
-            ) : (
-              <h2>Trending</h2>
-            )}
-          </div> */}
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="FX:EURUSD"
+            ></MiniChart>
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="BTCUSD"
+            ></MiniChart>
+            <MiniChart
+              colorTheme="dark"
+              width="100%"
+              height="9%"
+              isTransparent="true"
+              symbol="ETHUSD"
+            ></MiniChart>
           </div>
         </div>
       </div>
