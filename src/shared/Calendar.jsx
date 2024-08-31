@@ -12,8 +12,6 @@ const Calendar = ({ onDateChange }) => {
 
   const [selectedDate, setSelectedDate] = useState(new Date(new Date().toISOString()));
 
-  console.log("selectedDate", selectedDate);
-
   const handleDateChange = (date) => {
     const utcDate = getUTCDate(date);
     setSelectedDate(utcDate);
