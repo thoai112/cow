@@ -123,7 +123,7 @@ const Header = () => {
                     style={{ background: "orange", border: "none" }}
                     onClick={logout}
                   >
-                    Logout
+                    {i18n("logout")}
                   </Button>
                 </>
               ) : (
