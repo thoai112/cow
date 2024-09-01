@@ -106,21 +106,21 @@ const Chart = () => {
             <MiniChart
               colorTheme="dark"
               width="100%"
-              height="9%"
+              height="4%"
               isTransparent="true"
               symbol="FX:EURUSD"
             ></MiniChart>
             <MiniChart
               colorTheme="dark"
               width="100%"
-              height="9%"
+              height="5%"
               isTransparent="true"
               symbol="BTCUSD"
             ></MiniChart>
             <MiniChart
               colorTheme="dark"
               width="100%"
-              height="9%"
+              height="5%"
               isTransparent="true"
               symbol="ETHUSD"
             ></MiniChart>
@@ -243,6 +243,7 @@ const Chart = () => {
             <TickerTape colorTheme="dark" isTransparent="true"></TickerTape>
             <StockMarket
               colorTheme="dark"
+              exchange="NASDAQ"
               height={800}
               width="100%"
               isTransparent="true"

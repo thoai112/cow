@@ -5,8 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import regImg from '../assets/images/register.png';
 import userIcon from '../assets/images/user.png';
 import { AuthContext } from '../context/AuthContext';
-import { BASE_URL } from '../utils/config';
-
+import { API_URL } from '../utils/config';
 
 
 
@@ -33,8 +32,8 @@ const handleClick = async event => {
   event.preventDefault();
   try {
 
-    const res = await fetch(`${BASE_URL}/auth/register`, {
-    method : 'post',
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+    method : 'POST',
     headers:{
       'content-type':'application/json'
     },

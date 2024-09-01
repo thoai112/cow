@@ -122,6 +122,16 @@
   font-weight: bold;
   color: #007bff;
 }
+
+.mb-0{
+  color: #fff;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 /* responsive */
 
 @media only screen and (max-width: 992px) {
@@ -188,7 +198,6 @@
   .information {
     display: none;
   }
-
 
   
 }
