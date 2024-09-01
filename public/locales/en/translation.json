@@ -2,6 +2,7 @@
   "welcome": "Welcome to COW",
   "welcome_content": "where you can buy and sell, monitor the market or simply follow economic news...",
   "login": "Login",
+  "logout": "Logout",
   "register": "Register",
   "description_cow": {
     "title": "What is COW?",

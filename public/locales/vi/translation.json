@@ -2,6 +2,7 @@
   "welcome": "Welcome to COW",
   "welcome_content": "Chào mừng bạn đến với nơi có thể mua và bán, theo dõi thị trường hoặc chỉ đơn giản là theo dõi tin tức kinh tế...",
   "login": "Đăng nhập",
+  "logout": "Đăng xuất",
   "register": "Đăng ký",
   "description_cow": {
     "title": "COW là gì?",
