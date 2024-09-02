@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import useCurrencyFetch from "../hooks/useCurrencyFetch";
 import Calendar from "./Calendar";
-import { formatDate } from "../utils/formatDate";
+import { formatDate, formatNumber } from "../utils/formatDate";
 import { useTranslation } from "react-i18next";
 
 const Table = ({ onAveragePriceChange }) => {
@@ -38,7 +38,7 @@ const Table = ({ onAveragePriceChange }) => {
   const { data: mData, loading } = useCurrencyFetch(formatDate(selectedDate));
 
   const cowValue =
-    mData.cowvalue !== null ? parseFloat(mData.cowvalue).toFixed(2) : null;
+    mData.cowvalue !== null ? formatNumber(mData.cowvalue): null;
 
   const currency = useMemo(() => mData.currency || [], [mData.currency]);
 
@@ -83,10 +83,8 @@ const Table = ({ onAveragePriceChange }) => {
           accessorKey: "value",
           footer: "Price VND",
           cell: ({ row }) => {
-            const newValue = parseFloat(row.original.value).toFixed(2);
-            const previousValue = parseFloat(
-              row.original.valuePrevious
-            ).toFixed(2);
+            const newValue = formatNumber(row.original.value);
+            const previousValue = formatNumber(row.original.valuePrevious);
             const color = newValue > previousValue ? "value-up" : "value-down";
             return <span className={color}>{newValue}</span>;
           },

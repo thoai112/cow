@@ -6,12 +6,12 @@ function formatDate(date) {
 }
 
 
-const formatNumber = (number) => {
-  return new Intl.NumberFormat("de-DE", {
+function formatNumber(value) {
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(number);
-};
+    maximumFractionDigits: 2
+  }).format(parseFloat(value).toFixed(2));
+}
 
 function roundTimestamp(targetTimestamp, day, mon, year) {
   const date = new Date(targetTimestamp);

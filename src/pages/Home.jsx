@@ -46,7 +46,7 @@ const Home = () => {
       if (popup) {
         const rect = currencySection.getBoundingClientRect();
         const isVisible = rect.bottom <= window.innerHeight;
-        setIsPopupVisible(isVisible);
+        // setIsPopupVisible(isVisible);
       }
     };
 
@@ -140,7 +140,11 @@ const Home = () => {
                 <h2 onClick={handlePopupToggle}>Go to Home</h2>
               </div>
             </div>
+
             <div className="notify__content">
+              <p>{t("popup.line1")}</p>
+              <p>{t("popup.line2")}</p>
+              <p>{t("popup.line3")}</p>
               <p>{t("notify_cow.line1")}</p>
               <p>
                 <a href={`mailto:${t("notify_cow.line2")}`}>
@@ -148,10 +152,21 @@ const Home = () => {
                 </a>
               </p>
               <p>{t("notify_cow.line3")}</p>
+              <div class="checkboxes__item">
+                <label class="checkbox style-cb">
+                  <input
+                    type="checkbox"
+                    class="styled-checkbox"
+                    onChange={handleCheckboxChange}
+                  />
+                  <div class="checkbox__checkmark"></div>
+                  <div class="checkbox__body">{t("popup.line5")}</div>
+                </label>
+              </div>
             </div>
           </Row>
         </Container>
-        {isPopupVisible && (
+        {/* {isPopupVisible && (
           <div className="popup">
             <div className="popup-content">
               <span className="close" onClick={handlePopupToggle}>
@@ -163,9 +178,7 @@ const Home = () => {
                 <p>{t("popup.line2")}</p>
                 <p>{t("popup.line3")}</p>
                 <p>
-                  <a href="https://cowdev.coinofworld.com">
-                    {t("popup.line4")}
-                  </a>
+                  <a href="https://coinofworld.com">{t("popup.line4")}</a>
                 </p>
               </div>
               <div class="checkboxes__item">
@@ -181,7 +194,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </section>
 
       {/* <!-- ==========  testimonial section end   ========== --> */}
