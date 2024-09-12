@@ -39,6 +39,7 @@
   },
   "cowcard": {
     "title": "How it works.",
-    "formula": "The formula to calculate the value of 1 COW is: "
+    "formula": "The formula to calculate the value of 1 COW is: ",
+    "principle":"(V1 + V2 + ... + V158)/158"
   }
 }

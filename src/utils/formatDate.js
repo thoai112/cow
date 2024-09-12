@@ -7,7 +7,7 @@ function formatDate(date) {
 
 
 function formatNumber(value) {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('de-DE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   }).format(parseFloat(value).toFixed(2));

@@ -6,6 +6,7 @@ import regImg from '../assets/images/register.png';
 import userIcon from '../assets/images/user.png';
 import { AuthContext } from '../context/AuthContext';
 import { API_URL } from '../utils/config';
+import  PasswordStrengthMeter from '../shared/PasswordStrengthMeter';
 
 
 
@@ -74,7 +75,7 @@ const handleClick = async event => {
               <Form onSubmit={handleClick}>
 
               <FormGroup>
-                  <input type="text" placeholder='Username' required id='username' onChange={handleChange} />
+                  <input type="text" placeholder='Full Name' required id='fullName' onChange={handleChange} />
                 </FormGroup>
 
 
@@ -85,6 +86,12 @@ const handleClick = async event => {
                 <FormGroup>
                   <input type="password" placeholder='Password' required id='password' onChange={handleChange} />
                 </FormGroup>
+
+                <FormGroup>
+                  <input type="password" placeholder='Confirm Password' required id='confirmPassword' onChange={handleChange} />
+                </FormGroup>
+                
+                <PasswordStrengthMeter password={credentials.password} /> 
 
                 <Button className='btn secondary__btn auth__btn' type='submit'>Create Account</Button>
               </Form>

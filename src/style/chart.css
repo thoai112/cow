@@ -37,7 +37,7 @@
 
 /* Center Chart */
 .chart__center {
-  margin-left: 21%;
+  margin-left: 10%;
   width: 60%;
   padding: 1rem;
 }
@@ -84,6 +84,11 @@
 }
 
 .chart__center {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart__container {
   display: flex;
   flex-direction: column;
 }
@@ -251,9 +256,9 @@
     padding-left: 10%;
     width: 75%;
   }
-  .right__sidebar {
+  /* .right__sidebar {
     display: none;
-  }
+  } */
 
 
 }
@@ -263,12 +268,13 @@
     width: 23%;
   }
   .chart__center {
-    width: 75%;
+    margin-left: 5%;
+    width: 70%;
     padding-left: 30px;
   }
-  .right__sidebar {
+  /* .right__sidebar {
     display: none;
-  }
+  } */
 
 }
 
@@ -277,14 +283,14 @@
     display: none;
   }
   .chart__center {
-    margin-left: 0;
-    width: 100%;
+    margin-left: -5%;
+    width: 75%;
     padding: 1rem;
   }
 
-  .right__sidebar {
+  /* .right__sidebar {
     display: none;
-  }
+  } */
 
   .responsiveChart {
     width: 50%;

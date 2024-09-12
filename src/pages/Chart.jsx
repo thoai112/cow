@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import StickySidebar from "sticky-sidebar";
 import "../style/chart.css";
 import ChartDetail from "../components/ChartDetail/ChartDetail";
-import Converter from "../components/Converter/Converter";
 import Card from "../components/Card/Card";
 
 import useRegionFetch from "../hooks/useRegionFetch";
 import useLast24hFetch from "../hooks/useLast24hFetch";
+import useTrendingFetch from "../hooks/useTrendingFetch";
 
 import {
   SymbolOverview,
@@ -30,21 +30,21 @@ const Chart = () => {
   const [selectedOption, setSelectedOption] = useState("crypto");
   const sideBarRef = useRef(null);
 
-  const mergeData = (regionData, last24hData) => {
-    const last24hMap = last24hData.reduce((acc, item) => {
-      acc[item.from] = item.batchList;
-      return acc;
-    }, {});
+  // const mergeData = (regionData, last24hData) => {
+  //   const last24hMap = last24hData.reduce((acc, item) => {
+  //     acc[item.from] = item.batchList;
+  //     return acc;
+  //   }, {});
 
-    return regionData.map((regionItem) => {
-      const fromCode = regionItem.from.code;
-      const batchList = last24hMap[fromCode] || [];
-      return {
-        ...regionItem,
-        batchList,
-      };
-    });
-  };
+  //   return regionData.map((regionItem) => {
+  //     const fromCode = regionItem.from.code;
+  //     const batchList = last24hMap[fromCode] || [];
+  //     return {
+  //       ...regionItem,
+  //       batchList,
+  //     };
+  //   });
+  // };
 
   useEffect(() => {
     const rightSidebarElement = document.querySelector(".right-sidebar");
@@ -62,17 +62,24 @@ const Chart = () => {
     }
   }, []);
 
-  const { region: regionData = [], loading: regionLoading } = useRegionFetch();
-
-  const { data: last24hData = [], loading: last24hLoading } = useLast24hFetch();
+  const { data: trendingData = [], loading: trendingLoading } =
+    useTrendingFetch();
 
   useEffect(() => {
-    if (!regionLoading && !last24hLoading) {
-      const mergedData = mergeData(regionData.data, last24hData.data);
-      setCardData(mergedData);
+    if (!trendingLoading) {
+      setCardData(trendingData.data);
+      setSelected(trendingData.data[0]); // Set default value of selected to trendingData[0]
       setIsShowCard(false);
     }
-  }, [regionLoading, last24hLoading, regionData, last24hData]);
+  }, [trendingLoading, trendingData]);
+
+  useEffect(() => {
+    if (!trendingLoading) {
+      // const mergedData = mergeData(regionData.data, last24hData.data);
+      setCardData(trendingData.data);
+      setIsShowCard(false);
+    }
+  }, [trendingLoading, trendingData]);
 
   const handleCardClick = (data) => {
     setSelected(data);
@@ -92,64 +99,23 @@ const Chart = () => {
           {isShowCard ? (
             <p>Loading...</p>
           ) : (
-            cardData.map((region, index) => (
+            cardData.map((data, index) => (
               <Card
                 key={index}
-                region={region}
-                onClick={() => handleCardClick(region)}
+                data={data}
+                onClick={() => handleCardClick(data)}
               />
             ))
           )}
         </div>
         <div className="main-content">
-          <aside id="left__sidebar">
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="4%"
-              isTransparent="true"
-              symbol="FX:EURUSD"
-            ></MiniChart>
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="5%"
-              isTransparent="true"
-              symbol="BTCUSD"
-            ></MiniChart>
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="5%"
-              isTransparent="true"
-              symbol="ETHUSD"
-            ></MiniChart>
-            {isShowCard ? (
-              <p>Loading...</p>
-            ) : (
-              cardData.map((region, index) => (
-                <Card
-                  key={index}
-                  region={region}
-                  onClick={() => handleCardClick(region)}
-                />
-              ))
-            )}
-          </aside>
           <div className="chart__center">
             <div className="chartWrapper">
               <div className="responsiveChartContainer">
-                {selected === null ? (
-                  <AdvancedRealTimeChart
-                    className="responsiveChart"
-                    theme="dark"
-                    symbol="BTC"
-                    backgroundColor="rgb(17, 46, 66)"
-                    hide_side_toolbar="true"
-                    autosize
-                  />
+                {trendingLoading ? (
+                  <div>Loading...</div>
                 ) : (
-                  <ChartDetail chartDetail={selected} />
+                  selected && <ChartDetail chartDetail={selected} />
                 )}
               </div>
             </div>
@@ -225,50 +191,25 @@ const Chart = () => {
                 isTransparent="true"
               ></Timeline>
             )}
-            <StockHeatmap
+            {/* <Timeline
               colorTheme="dark"
               height={400}
               width="100%"
               isTransparent="true"
-            ></StockHeatmap>
-            <Timeline
-              colorTheme="dark"
-              height={400}
-              width="100%"
-              isTransparent="true"
-            ></Timeline>
+            ></Timeline> */}
           </div>
           <div className="right__sidebar">
-            <Converter />
-            <TickerTape colorTheme="dark" isTransparent="true"></TickerTape>
-            <StockMarket
-              colorTheme="dark"
-              exchange="NASDAQ"
-              height={800}
-              width="100%"
-              isTransparent="true"
-            ></StockMarket>
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="9%"
-              isTransparent="true"
-              symbol="FX:EURUSD"
-            ></MiniChart>
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="9%"
-              isTransparent="true"
-              symbol="BTCUSD"
-            ></MiniChart>
-            <MiniChart
-              colorTheme="dark"
-              width="100%"
-              height="9%"
-              isTransparent="true"
-              symbol="ETHUSD"
-            ></MiniChart>
+            {isShowCard ? (
+              <p>Loading...</p>
+            ) : (
+              cardData.map((data, index) => (
+                <Card
+                  key={index}
+                  data={data}
+                  onClick={() => handleCardClick(data)}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

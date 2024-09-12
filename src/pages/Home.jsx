@@ -152,15 +152,15 @@ const Home = () => {
                 </a>
               </p>
               <p>{t("notify_cow.line3")}</p>
-              <div class="checkboxes__item">
-                <label class="checkbox style-cb">
+              <div className="checkboxes__item">
+                <label className="checkbox style-cb">
                   <input
                     type="checkbox"
-                    class="styled-checkbox"
+                    className="styled-checkbox"
                     onChange={handleCheckboxChange}
                   />
-                  <div class="checkbox__checkmark"></div>
-                  <div class="checkbox__body">{t("popup.line5")}</div>
+                  <div className="checkbox__checkmark"></div>
+                  <div className="checkbox__body">{t("popup.line5")}</div>
                 </label>
               </div>
             </div>

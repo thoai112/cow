@@ -6,7 +6,6 @@
   margin-left: 20px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   transition: all 0.3s ease-in-out;
-  
 }
 
 .cowcard__content {
@@ -43,7 +42,7 @@
 }
 
 .cowcard__content span {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--secondary-color);
 }
@@ -53,6 +52,122 @@
   font-weight: 400;
 }
 
+/* converter */
+
+.cow-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.custom-convert {
+  width: 15px;
+  height: 15px;
+  margin: 0 10px;
+}
+
+.coin {
+  background-color: #081b29;
+  display: flex;
+  align-items: center;
+}
+
+.usd {
+  background-color: #61c9db70;
+}
+
+.icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.coin,
+.usd {
+  display: flex;
+  align-items: center;
+}
+
+.coin .symbol,
+.usd .symbol {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.coin .fullName,
+.usd .fullName {
+  font-size: 0.8rem;
+  font-weight: 450;
+  justify-items: auto;
+  color: var(--text-color);
+}
+
+.coin .icon,
+.usd .icon {
+  margin-right: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.coin input,
+.usd input {
+  color: var(--text-color);
+  flex: 1;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  text-align: end;
+  font-size: 1rem;
+  font-weight: 450;
+}
+
+
+/* dropdown test */
+.currency-selector {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu-custom {
+  position: absolute;
+  background-color: #11111120;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 60px; 
+  max-height: 40vh; 
+  overflow-y: auto; 
+  scrollbar-width: none;
+
+}
+
+.dropdown-item-custom {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item img {
+  margin-right: 8px;
+  width: 20px; /* Adjust image size as needed */
+  height: 20px; /* Adjust image size as needed */
+}
 /* @media only screen and (max-width: 1300px) {
   .cowcard {
     width: 350px;
@@ -102,9 +217,9 @@
   .cowcard__content h2 {
     font-size: 0.8rem;
   }
-  .cowcard__content p, .cowcard__content span {
+  .cowcard__content p,
+  .cowcard__content span {
     font-size: 0.8rem;
     padding: 0 10px;
   }
-  
 }

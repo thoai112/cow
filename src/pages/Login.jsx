@@ -47,6 +47,7 @@ if(!res.ok) {
   alert(result.message);
 }
 
+console.log(result.data);
 dispatch({type: 'LOGIN_SUCCESS', payload:result.data})
 navigate('/');
 
@@ -82,6 +83,9 @@ dispatch({type: 'LOGIN_FAILURE', payload:err.message});
                   <input type="password" placeholder='Password' required id='password' onChange={handleChange} />
                 </FormGroup>
 
+                <Link to='/forgot-password' >
+                  Forgot password?
+                </Link>
                 <Button className='btn secondary__btn auth__btn' type='submit'>Login</Button>
               </Form>
               <p>Don't have an account? <Link to='/register'>Create</Link></p>

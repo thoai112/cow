@@ -40,6 +40,7 @@
 
   "cowcard": {
     "title": "Cách hoạt động của COW.",
-    "formula": "Công thức tính giá trị của 1 COW: "
+    "formula": "Công thức tính giá trị của 1 COW: ",
+    "principle":"(V1 + V2 + ... + V158)/158"
   }
 }

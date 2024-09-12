@@ -18,18 +18,16 @@ import { AiOutlineExpand } from "react-icons/ai";
 import {
   convertTime,
   convertDate,
-  roundTimestamp,
 } from "../../utils/logicHandle";
 import moment from "moment/moment";
-import useLiveChartFetch from "../../hooks/useLiveChartFetch";
 import "./ChartDetail.css";
+import useTrendingChartFetch from "../../hooks/useTrendingChartFetch";
 
 function ChartDetail({ chartDetail }) {
-  const [timePeriod, setTimePeriod] = useState(0);
-  const [timeStamp, setTimeStamp] = useState(new Date().getTime());
+  const [timePeriod, setTimePeriod] = useState(1);
 
-  const listPeriod = ["12h", "1D", "1W", "1M", "1Y", "5Y", "10Y"];
-  const listPeriodConvert = ["12h", "1d", "7d", "1m", "1y", "5y", "10y"];
+  const listPeriod = ["24h", "1W", "1M", "1Y"];
+  const listPeriodConvert = ["24h", "7d", "30d", "1y"];
   const listFormat = [
     "kk:mm",
     "Do MMM",
@@ -41,20 +39,24 @@ function ChartDetail({ chartDetail }) {
 
   const chartRef = useRef(null);
 
-  const { data: dataHistory = [], loading } = useLiveChartFetch(
-    chartDetail?.from?.code,
-    chartDetail?.to?.code,
+  const { data: dataHistory = [], loading } = useTrendingChartFetch(
+    chartDetail?.type,
+    chartDetail?.name?.toLowerCase(),
+    listPeriodConvert[timePeriod]
   );
-
-  if (loading) {
-    console.log("loading");
-  }
 
   const [settingChart, setSettingChart] = useState({
     width: 1000,
     height: 350,
     margin: { top: 5, right: 10, bottom: 5, left: 10 },
   });
+
+  useEffect(() => {
+    if (!chartDetail) {
+      console.log("chartDetail is null or undefined");
+      return;
+    }
+  }, [chartDetail, dataHistory]);
 
   function exitHandler() {
     if (
@@ -71,30 +73,6 @@ function ChartDetail({ chartDetail }) {
   }
 
   useEffect(() => {
-    if (timePeriod === 0) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 12, 0, 0, 0));
-    }
-    if (timePeriod === 1) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 1, 0, 0));
-    }
-    if (timePeriod === 2) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 7, 0, 0));
-    }
-    if (timePeriod === 3) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 1, 0));
-    }
-    if (timePeriod === 4) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 1));
-    }
-    if (timePeriod === 5) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 5));
-    }
-    if (timePeriod === 6) {
-      setTimeStamp(roundTimestamp(dataHistory.timestamp, 0, 0, 0, 10));
-    }
-  }, [timePeriod, dataHistory.timestamp]);
-
-  useEffect(() => {
     document.addEventListener("fullscreenchange", exitHandler, false);
     document.addEventListener("mozfullscreenchange", exitHandler, false);
     document.addEventListener("MSFullscreenChange", exitHandler, false);
@@ -104,33 +82,22 @@ function ChartDetail({ chartDetail }) {
   const currencyPrice = [];
   const currencyTimestamp = [];
 
-  if (dataHistory && dataHistory.batchList) {
-    dataHistory.batchList.forEach((batch) => {
-      const { startTime, interval, rates } = batch;
-      for (let index = 1; index < rates.length; index++) {
-        const rate = rates[index];
-        currencyTimestamp.push(startTime + index * interval);
-        currencyPrice.push(rate - rates[0]);
-      }
-    });
-  }
-
+  Object.keys(chartDetail?.rate).forEach((timestamp) => {
+    currencyTimestamp.push(Number(timestamp));
+    currencyPrice.push(chartDetail?.rate[timestamp]);
+  });
+  
   const data = currencyPrice.map((price, index) => {
     return {
-      TimeLabel: moment(currencyTimestamp[index]).format(
-        listFormat[timePeriod]
-      ),
+      TimeLabel: moment(currencyTimestamp[index]).format(listFormat[timePeriod]),
       time: currencyTimestamp[index],
       price: Number(price),
       timeConvert: convertDate(currencyTimestamp[index]),
     };
   });
+  const reverseData = data.slice(0, data.length);
 
-  const index = data.findIndex((item) => item.time === timeStamp);
-  const reverseData = data.slice(index, data.length);
-
-
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">
@@ -139,22 +106,16 @@ function ChartDetail({ chartDetail }) {
             <div className="time">{convertTime(payload[0]?.payload?.time)}</div>
           </div>
           <div className="label">
-            <span>Price: {`$${priceConvert(payload[0].value)}`}</span>
+            <span>
+              Price:{" "}
+              {`${priceConvert(payload[0].value)} ${dataHistory?.to?.symbol}`}
+            </span>
           </div>
         </div>
       );
     }
     return null;
   };
-
-  // const handleBrushChange = ({ startIndex, endIndex }) => {
-  //   const selectedData = reverseData.slice(startIndex, endIndex + 1);
-    // const min = Math.min(...selectedData.map((data) => data.price));
-    // const max = Math.max(...selectedData.map((data) => data.price));
-    // const tailValue = selectedData[selectedData.length - 1].price;
-    // const timeStart = selectedData[0].time;
-    // const timeEnd = selectedData[selectedData.length - 1].time;
-  // };
 
   return (
     <>
@@ -163,18 +124,12 @@ function ChartDetail({ chartDetail }) {
           <div className="chartHeader__currency">
             <div className="currency__container">
               <div className="currency__name">
-                {chartDetail.from.code} to {chartDetail.to.code} Chart
+                {loading ? "Loading..." : chartDetail?.name}
               </div>
               <span
                 className="percentage__change"
                 style={{
-                  color:
-                    ((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) /
-                      reverseData[0]?.price) *
-                      100 <
-                    0
-                      ? "red"
-                      : "green",
+                  color: dataHistory?.change < 0 ? "red" : "green",
                 }}
               >
                 {(
@@ -182,6 +137,7 @@ function ChartDetail({ chartDetail }) {
                     reverseData[0]?.price) *
                   100
                 ).toFixed(2)}
+              
                 %
               </span>
               <span style={{ color: "white", fontSize: "1.2rem" }}>
@@ -194,9 +150,9 @@ function ChartDetail({ chartDetail }) {
           </div>
 
           <div className="chartHeader__price">
-            1 {dataHistory?.from?.symbol} = {chartDetail.rateEnd.toFixed(3)}{" "}
-            {dataHistory?.to?.symbol}{" "}
-            {new Date(dataHistory.timestamp).toUTCString()}
+          1 {chartDetail?.name} = {Number(chartDetail?.endRate).toFixed(3)}
+            {dataHistory?.to?.symbol}
+            {new Date().toUTCString()}
           </div>
         </div>
 
@@ -240,7 +196,7 @@ function ChartDetail({ chartDetail }) {
               height={settingChart.height}
               margin={settingChart.margin}
               className="lineChart"
-              data={timePeriod === 6 ? data : reverseData}
+              data={reverseData}
             >
               <Brush
                 dataKey="TimeLabel"
@@ -252,7 +208,15 @@ function ChartDetail({ chartDetail }) {
                     type="monotone"
                     dataKey="price"
                     strokeWidth="1"
-                    stroke={((reverseData.slice(-1)[0]?.price - reverseData[0]?.price) / reverseData[0]?.price * 100) < 0 ? "red" : "green"}
+                    stroke={
+                      ((reverseData.slice(-1)[0]?.price -
+                        reverseData[0]?.price) /
+                        reverseData[0]?.price) *
+                        100 <
+                      0
+                        ? "red"
+                        : "green"
+                    }
                     dot={<></>}
                     fill="url(#colorGradient)"
                   />
@@ -273,7 +237,6 @@ function ChartDetail({ chartDetail }) {
                     </linearGradient>
                   </defs>
                 </AreaChart>
-        
               </Brush>
               <XAxis dataKey="TimeLabel" minTickGap={0} />
               <YAxis
@@ -308,26 +271,18 @@ function ChartDetail({ chartDetail }) {
                 fill="url(#colorUv)"
               />
               <ReferenceLine
-                y={timePeriod === 6 ? data[0]?.price : reverseData[0]?.price}
+                y={reverseData[0]?.price}
                 stroke="#fff"
                 strokeDasharray="2"
               >
                 <Label fill="#fff">
-                  {priceConvert(
-                    timePeriod === 6 ? data[0]?.price : reverseData[0]?.price
-                  )}
+                  {priceConvert(reverseData[0]?.price)}
                 </Label>
               </ReferenceLine>
             </LineChart>
           </ResponsiveContainer>
         </div>
-
-        {/* 
-        <div className="chart__info">
-          <div className="row"></div>
-          <div className="row">{coinDetail?.name} close: high: </div>
-        </div> */}
-      </div>
+     </div>
     </>
   );
 }

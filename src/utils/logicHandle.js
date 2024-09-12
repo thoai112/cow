@@ -56,26 +56,26 @@ export function closeFullscreen() {
 
 export function roundTimestamp(targetTimestamp,hour, day, mon, year) {
     const date = new Date(targetTimestamp);
-    const minutes = date.getMinutes();
+    const minutes = date.getUTCMinutes();
     const diff = minutes % 10;
     const roundedMinutes = minutes + (diff >= 0 ? 10 - diff : -diff);
-    date.setDate(date.getDate() - day);
-    date.setHours(date.getHours() - hour);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    if (day < 2){
-        date.setMinutes(roundedMinutes);
+    date.setUTCDate(date.getUTCDate() - day);
+    date.setUTCHours(date.getUTCHours() - hour);
+    date.setUTCSeconds(0);
+    date.setUTCMilliseconds(0);
+    if (day < 2) {
+        date.setUTCMinutes(roundedMinutes);
     }
-    if (day===7 || mon===1){
-        date.setMinutes(0);
-        date.setHours(date.getHours() + 1);
+    if (day === 7 || mon === 1) {
+        date.setUTCMinutes(0);
+        date.setUTCHours(date.getUTCHours() + 1);
         console.log(date);
     }
-    date.setMonth(date.getMonth() - mon);
-    date.setFullYear(date.getFullYear() - year);
-    if (year > 0){
-        date.setHours(0);
-        date.setMinutes(0);
+    date.setUTCMonth(date.getUTCMonth() - mon);
+    date.setUTCFullYear(date.getUTCFullYear() - year);
+    if (year > 0) {
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
     }
     return date.getTime();
   }

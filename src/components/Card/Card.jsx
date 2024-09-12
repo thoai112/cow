@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 import useLazyLoad from "../../hooks/useLazyLoad";
 
-const Card = ({ region, onClick }) => {
+const Card = ({ data, onClick }) => {
   const [isVisible, ref] = useLazyLoad();
 
-  const currencyTimestamp = [];
-  const currencyPrice = [];
+  const [currencyPrice, setCurrencyPrice] = useState([]);
 
-  if (region && region.batchList) {
-    region.batchList.forEach((batch) => {
-      const { startTime, interval, rates } = batch;
-      for (let index = 1; index < rates.length; index++) {
-        const rate = rates[index];
-        currencyTimestamp.push(startTime + index * interval);
-        currencyPrice.push(rate - rates[0]);
-      }
+  useEffect(() => {
+    const rateData = data?.rate || {};
+    const timestamps = Object.keys(rateData);
+    const newCurrencyPrice = [];
+
+    timestamps.forEach(timestamp => {
+      newCurrencyPrice.push(rateData[timestamp]);
     });
-  }
+
+    setCurrencyPrice(newCurrencyPrice);
+  }, [data]);
 
 
   return (
@@ -28,10 +28,11 @@ const Card = ({ region, onClick }) => {
         {isVisible ? (
           <div className="cardDetail__columns">
             <div className="cardDetail__currency">
-              {region.from.code}/{region.to.code}
+              {data.name}/{data.to.code}
             </div>
             {isVisible && (
               <svg
+              className="card__chart"
               width="40%"
               height="100%"
               viewBox="0 0 100 40"
@@ -39,28 +40,28 @@ const Card = ({ region, onClick }) => {
             >
                 <Sparklines
                   data={currencyPrice.slice(
-                    currencyPrice.length - 150,
+                    0,
                     currencyPrice.length
                   )}
                 >
                   <SparklinesLine
-                    color={region?.change < 0 ? "red" : "green"}
+                    color={data?.change < 0 ? "red" : "green"}
                   />
                 </Sparklines>
               </svg>
             )}
             <div className="cardDetail__column">
               <div className="cardDetail__column--price">
-                {region.rateEnd.toFixed(3)}
+                {data.endRate.toFixed(2)}
               </div>
               <div className={`cardDetail__column--valuechange`}>
-                {region.change
+                {data?.change
                   ? (() => {
-                      const color = region.change < 0 ? "red" : "green";
-                      const sign = region.change > 0 ? "+" : "";
+                      const color = data.change < 0 ? "red" : "green";
+                      const sign = data.change > 0 ? "+" : "";
                       return (
                         <span style={{ color }}>
-                          {sign} {region.change.toFixed(2)} %
+                          {sign} {data.change.toFixed(2)} %
                         </span>
                       );
                     })()

@@ -1,15 +1,14 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Container, Row, Button } from "reactstrap";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./Header.css";
 import { AuthContext } from "./../../context/AuthContext";
 import logo from "../../assets/images/logocow.png";
 import { useTranslation } from "react-i18next";
-import "flag-icons/css/flag-icons.min.css";
 
 const languages = [
-  { code: "en", lang: "EN", flag: "us" },
-  { code: "vi_VN", lang: "VN", flag: "vn" },
+  { code: "en", lang: "EN", flag: "gbp" },
+  { code: "vi", lang: "VN", flag: "vnd" },
 ];
 
 // nav links
@@ -29,6 +28,7 @@ const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { i18n } = useTranslation();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
@@ -57,9 +57,23 @@ const Header = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    setIsDropdownOpen(false);
   };
 
-  // const selectedLanguage = languages.find((lng) => lng.code === i18n.language);
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const getFlag = (language) => {
+    switch (language) {
+      case 'en':
+        return 'gbp';
+      case 'vi':
+        return 'vnd';
+      default:
+        return 'gbp';
+    }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", stickyHeaderFunc);
@@ -77,7 +91,6 @@ const Header = () => {
 
   const { t } = useTranslation();
 
-
   return (
     <header className="header" ref={headerRef}>
       <Container>
@@ -88,7 +101,7 @@ const Header = () => {
             <div className="logo header-title">
               <Link to="/" className="logo-link">
                 <img src={logo} alt="logo" className="logo-image" />
-                <span className="logo-text">COW OF WORLD</span>
+                <span className="logo-text">COW</span>
               </Link>
             </div>
 
@@ -140,7 +153,34 @@ const Header = () => {
             </div>
 
             {/* Language Selector */}
-            <select className="language__selector"
+            <div className="currency-selector">
+            <div className="icon" onClick={handleDropdownToggle}>
+              {i18n.language && (
+                <img
+                  src={`https://www.xe.com/svgs/flags/${getFlag(i18n.language)}.static.svg`}
+                  alt={`${getFlag(i18n.language)} icon`}
+                />
+              )}
+            </div>
+            {isDropdownOpen && (
+              <div className="dropdown-menu-custom">
+                {languages.map((lg) => (
+                  <div
+                    key={lg.flag}
+                    className="dropdown-item-custom"
+                    onClick={() => changeLanguage(lg.code)}
+                  >
+                    <img
+                      src={`https://www.xe.com/svgs/flags/${lg.flag}.static.svg`}
+                      alt={`${lg.flag} icon`}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+            {/* <select className="language__selector"
               defaultValue={i18n.language}
               onChange={(e) => changeLanguage(e.target.value)}
             >
@@ -153,7 +193,7 @@ const Header = () => {
                   {language.lang}
                 </option>
               ))}
-            </select>
+            </select> */}
             {/* Mobile menu */}
             <span className="mobile__menu" onClick={toggleMenu}>
               <i className="ri-menu-line"></i>
