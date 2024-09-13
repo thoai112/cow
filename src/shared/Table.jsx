@@ -13,6 +13,8 @@ import Calendar from "./Calendar";
 import { formatDate, formatNumber } from "../utils/formatDate";
 import { useTranslation } from "react-i18next";
 
+
+
 const Table = ({ onAveragePriceChange }) => {
   const { t } = useTranslation();
   const [sorting, setSorting] = useState([]);
@@ -93,6 +95,7 @@ const Table = ({ onAveragePriceChange }) => {
       ].filter((column) => visibleColumns[column.accessorKey]),
     [visibleColumns]
   );
+ 
 
   // React Table hook setup
   const table = useReactTable({
@@ -119,6 +122,7 @@ const Table = ({ onAveragePriceChange }) => {
       <div className="cow__value">
         <div className="col-6">
           <Calendar onDateChange={setSelectedDate} />
+        
         </div>
         <div className="col-5 row__price">
           <div className="search-bar">
